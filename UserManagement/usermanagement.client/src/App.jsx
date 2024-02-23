@@ -27,10 +27,10 @@ function App() {
     <div className="App">
       <Routes>
 
-        <Route path='/admin' Component={Login} />
+        <Route path='/' Component={Login} />
         <Route path='/register' Component={Register} />
 
-        <Route path="/" element={<LandingPage />} />
+
         {/*Private Route */}
         <Route element={<PrivateRoutes />}>
         

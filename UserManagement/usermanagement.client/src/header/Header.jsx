@@ -31,7 +31,7 @@ function Header() {
     }
     const logout = () => {
         localStorage.clear();
-        navigate('/admin');
+        navigate('/');
       };
     useEffect(() => {
         var isAuth = localStorage.getItem('auth');
