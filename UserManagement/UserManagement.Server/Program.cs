@@ -114,12 +114,12 @@ namespace UserManagement.Server
             app.UseStaticFiles();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
 
+            //}
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseHttpsRedirection();
             // Must be betwwen app.UseRouting() and app.UseEndPoints()
             // maintain middleware order
