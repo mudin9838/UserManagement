@@ -47,21 +47,21 @@ export default defineConfig({
     server: {
         proxy: {
             '^/api/auth/Login': {
-                target: 'https://localhost:44314/',
+                target: 'https://usermsapi.azurewebsites.net/',
                 secure: false
             },
         },
         // @ts-ignore
         '^/api/user/Create': {
-            target: 'https://localhost:44314/',
+            target: 'https://usermsapi.azurewebsites.net/',
             secure: false
         },
         '^/api/user/GetAllUserDetails': {
-            target: 'https://localhost:44314/',
+            target: 'https://usermsapi.azurewebsites.net/',
             secure: false
         },
         '^/api/User/GetUserDetails/{id}': {
-            target: 'https://localhost:44314/',
+            target: 'https://usermsapi.azurewebsites.net/',
             secure: false
         },
         port: 5173,
