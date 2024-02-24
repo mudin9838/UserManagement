@@ -1,45 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { json, useNavigate } from "react-router-dom";
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import axios from "axios";
 import Swal from "sweetalert2";
 import { Login_BASE_URL } from "../App";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import { Grid, Snackbar, TextField } from "@mui/material";
+import bg from "./bg/signin.svg";
+import bgimg from "./bg/backimg.jpg";
+import { useForm } from "react-hook-form";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        UMS
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
-const defaultTheme = createTheme();
+const boxstyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "75%",
+  height: "70%",
+  bgcolor: "background.paper",
+  boxShadow: 24,
+};
+
+const center = {
+  position: "relative",
+  top: "50%",
+  left: "37%",
+};
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const vertical = "top";
+  const horizontal = "right";
   useEffect(() => {
     var isAuth = localStorage.getItem("auth");
 
@@ -47,17 +54,21 @@ export default function SignIn() {
       navigate("/dashboard", { replace: true });
     }
   }, []);
+
   const [inputs, setInputs] = useState({
     userName: "",
     password: "",
   });
+
+  const [open, setOpen] = useState(false);
   const handleChange = (event) => {
     event.persist();
     setInputs({ ...inputs, [event.target.name]: event.target.value });
   };
 
-  const handleFormsubmit = (event) => {
-    event.preventDefault();
+  const handleFormsubmit = () => {
+    setOpen(true);
+   // event.preventDefault();
 
     let data = {
       UserName: inputs.userName,
@@ -101,65 +112,129 @@ export default function SignIn() {
       });
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box 
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          <ValidatorForm
-                onSubmit={handleFormsubmit}
-            >
-                <TextValidator
-                 margin="normal"
-                    label="userName"
-                    onChange={handleChange}
-                    name="userName"
-                    value={inputs.userName}
-                    autoComplete="userName"
-                    validators={['required']}
-                    errorMessages={['this field is required']}
-                    sx={{
-                        width: 300,
-                      }}
-                />
-                <br />
-                <TextValidator
-                margin="normal"
-                    label="Password"
-                    onChange={handleChange}
-                    name="password"
-                    type="password"
-                    fullWidth
-                    value={inputs.password}
-                    autoComplete="current-password"
-                    validators={['required']}
-                    errorMessages={['this field is required']}
-                />
-                <br />
-                <Button
-                     type="submit"
-                     fullWidth
-                     variant="contained"
-                     sx={{ mt: 3, mb: 2 }}
-                   >Sign In
-                </Button>
-            </ValidatorForm>
+    <>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical, horizontal }}
+      ></Snackbar>
+      <div
+        style={{
+          backgroundImage: `url(${bgimg})`,
+          backgroundSize: "cover",
+          height: "100vh",
+          color: "#f5f5f5",
+        }}
+      >
+        <Box sx={boxstyle}>
+          <Grid container>
+            <Grid item xs={12} sm={12} lg={6}>
+              <Box
+                style={{
+                  backgroundImage: `url(${bg})`,
+                  backgroundSize: "cover",
+                  marginTop: "40px",
+                  marginLeft: "15px",
+                  marginRight: "15px",
+                  height: "63vh",
+                  color: "#f5f5f5",
+                }}
+              ></Box>
+            </Grid>
+            <Grid item xs={12} sm={12} lg={6}>
+              <Box
+                style={{
+                  backgroundSize: "cover",
+                  height: "70vh",
+                  minHeight: "500px",
+                  backgroundColor: "#3b33d5",
+                }}
+              >
+                <ThemeProvider theme={darkTheme}>
+                  <Container>
+                    <Box height={35} />
+                    <Box sx={center}>
+                      <Avatar
+                        sx={{ ml: "35px", mb: "4px", bgcolor: "#ffffff" }}
+                      >
+                        <LockOutlinedIcon />
+                      </Avatar>
+                      <Typography component="h1" variant="h4">
+                        Sign In
+                      </Typography>
+                    </Box>
+                    <Box
+                      component="form"
+                      noValidate
+                      onSubmit={handleSubmit(handleFormsubmit)}
+                      sx={{ mt: 2 }}
+                    >
+                      <Grid container spacing={1}>
+                        <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
+                          <TextField
+                            fullWidth
+                            label="Username"
+                            {...register("userName", {
+                              onChange: handleChange,
+                              required: "Username is required",
+                            })}
+                            error={Boolean(errors.userName)}
+                            helperText={errors.userName?.message}
+                            margin="normal"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
+                          <TextField
+                            fullWidth
+                            type="password"
+                            label="Password"
+                            {...register("password", {
+                              onChange: handleChange,
+                              required: "Password is required"
+                            })}
+                            error={Boolean(errors.password)}
+                            helperText={errors.password?.message}
+                            margin="normal"
+                            sx={{ mt: 2 }}
+                          />
+                        </Grid>
+
+                        <Grid item xs={12} sx={{ ml: "5em", mr: "5em" }}>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            fullWidth
+                            size="large"
+                            sx={{
+                              mt: "10px",
+                              mr: "20px",
+                              borderRadius: 28,
+                              color: "#ffffff",
+                              minWidth: "170px",
+                              backgroundColor: "#FF9A01",
+                            }}
+                          >
+                            Sign in
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Container>
+                </ThemeProvider>
+              </Box>
+            </Grid>
+          </Grid>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+      </div>
+    </>
   );
 }
