@@ -4,7 +4,6 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Role_BASE_URL } from '../../App';
 import Sidebar from '../sidebar/sidebar';
-import Header from '../header/Header';
 import { getData, putData } from '../../services/AccessAPI';
 
 const EditRole = () => {
@@ -74,9 +73,7 @@ const EditRole = () => {
 
   return (
     <div>
-      <Header />
       <div style={{ display: 'flex' }}>
-        <Sidebar />
         <div style={{ flex: 1, padding: '20px' }}>
           <div className='container py-3'>
             <div className='container pt-1'>
