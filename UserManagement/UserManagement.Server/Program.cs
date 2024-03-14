@@ -16,8 +16,8 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.Configuration
-.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json", optional: true, reloadOnChange: true);
+        //        builder.Configuration
+        //.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("Secrets.json", optional: true, reloadOnChange: true);
         // Add services to the container.
 
         builder.Services.AddControllers();
