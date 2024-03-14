@@ -35,11 +35,7 @@ namespace UserManagement.Infrastructure.Services
         public async Task<bool> CreateRoleAsync(string roleName)
         {
             var result = await _roleManager.CreateAsync(new IdentityRole(roleName));
-            if(!result.Succeeded)
-            {
-                throw new ValidationException(result.Errors);
-            }
-            return result.Succeeded;
+            return !result.Succeeded ? throw new ValidationException(result.Errors) : result.Succeeded;
         }
 
 
@@ -61,11 +57,7 @@ namespace UserManagement.Infrastructure.Services
             }
 
             var addUserRole = await _userManager.AddToRolesAsync(user, roles);
-            if (!addUserRole.Succeeded)
-            {
-                throw new ValidationException(addUserRole.Errors);
-            }
-            return (result.Succeeded, user.Id);
+            return !addUserRole.Succeeded ? throw new ValidationException(addUserRole.Errors) : ((bool isSucceed, string userId))(result.Succeeded, user.Id);
         }
 
         public async Task<bool> DeleteRoleAsync(string roleId)
@@ -81,11 +73,7 @@ namespace UserManagement.Infrastructure.Services
                 throw new BadRequestException("You can not delete Administrator Role");
             }
             var result = await _roleManager.DeleteAsync(roleDetails);
-            if (!result.Succeeded)
-            {
-                throw new ValidationException(result.Errors);
-            }
-            return result.Succeeded;
+            return !result.Succeeded ? throw new ValidationException(result.Errors) : result.Succeeded;
         }
 
         public async Task<bool> DeleteUserAsync(string userId)
@@ -145,7 +133,7 @@ namespace UserManagement.Infrastructure.Services
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if (user == null)
             {
-                throw new NotFoundException("User not found");             
+                throw new NotFoundException("User not found");
             }
             var roles = await _userManager.GetRolesAsync(user);
             return (user.Id, user.FullName, user.UserName, user.Email, roles);
@@ -165,23 +153,13 @@ namespace UserManagement.Infrastructure.Services
         public async Task<string> GetUserIdAsync(string userName)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == userName);
-            if (user == null)
-            {
-                throw new NotFoundException("User not found");
-                //throw new Exception("User not found");
-            }
-            return await _userManager.GetUserIdAsync(user);
+            return user == null ? throw new NotFoundException("User not found") : await _userManager.GetUserIdAsync(user);
         }
 
         public async Task<string> GetUserNameAsync(string userId)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            if (user == null)
-            {
-                throw new NotFoundException("User not found");
-                //throw new Exception("User not found");
-            }
-            return await _userManager.GetUserNameAsync(user);
+            return user == null ? throw new NotFoundException("User not found") : await _userManager.GetUserNameAsync(user);
         }
 
         public async Task<List<string>> GetUserRolesAsync(string userId)
@@ -199,11 +177,7 @@ namespace UserManagement.Infrastructure.Services
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
-            if(user == null)
-            {
-                throw new NotFoundException("User not found");
-            }
-            return await _userManager.IsInRoleAsync(user, role);
+            return user == null ? throw new NotFoundException("User not found") : await _userManager.IsInRoleAsync(user, role);
         }
 
         public async Task<bool> IsUniqueUserName(string userName)
@@ -229,6 +203,13 @@ namespace UserManagement.Infrastructure.Services
             return result.Succeeded;
         }
 
+        public async Task<bool> ChangePassword(string id, string currentPassword, string newPassword)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+            return result.Succeeded;
+        }
+
         public async Task<(string id, string roleName)> GetRoleByIdAsync(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
@@ -249,7 +230,7 @@ namespace UserManagement.Infrastructure.Services
 
         public async Task<bool> UpdateUsersRole(string userName, IList<string> usersRole)
         {
-            var user =  await _userManager.FindByNameAsync(userName);
+            var user = await _userManager.FindByNameAsync(userName);
             var existingRoles = await _userManager.GetRolesAsync(user);
             var result = await _userManager.RemoveFromRolesAsync(user, existingRoles);
             result = await _userManager.AddToRolesAsync(user, usersRole);
