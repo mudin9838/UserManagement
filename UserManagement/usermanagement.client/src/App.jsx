@@ -14,10 +14,10 @@ import { getDesignTokens } from "./theme";
 import { Outlet } from "react-router-dom";
 
 
-export const Login_BASE_URL = "https://usermsapi.azurewebsites.net";
-export const Register_BASE_URL = "https://usermsapi.azurewebsites.net";
-export const Role_BASE_URL = "https://usermsapi.azurewebsites.net";
-export const BASE_URL = "https://usermsapi.azurewebsites.net";
+export const Login_BASE_URL = "https://localhost:44314";
+export const Register_BASE_URL = "https://localhost:44314";
+export const Role_BASE_URL = "https://localhost:44314";
+export const BASE_URL = "https://localhost:44314";
 
 
 
