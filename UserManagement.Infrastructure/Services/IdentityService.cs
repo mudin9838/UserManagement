@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Application.Common.Exceptions;
 using UserManagement.Application.Common.Interfaces;
 using UserManagement.Infrastructure.Identity;
+
 
 namespace UserManagement.Infrastructure.Services
 {
@@ -11,13 +13,17 @@ namespace UserManagement.Infrastructure.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IFileService _fileService;
 
-        public IdentityService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public IdentityService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IFileService fileService, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _roleManager = roleManager;
+            _fileService = fileService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> AssignUserToRole(string userName, IList<string> roles)
@@ -193,11 +199,22 @@ namespace UserManagement.Infrastructure.Services
 
         }
 
-        public async Task<bool> UpdateUserProfile(string id, string fullName, string email, IList<string> roles)
+        public async Task<bool> UpdateUserProfile(string id, string fullName, string email, IList<string> roles, IFormFile file)
         {
+            var context = _httpContextAccessor.HttpContext?.Request;
+            var baseUrl = context.Scheme + "://" + context.Host;
+            var imageUrl = await _fileService.UploadImage("users", file);
             var user = await _userManager.FindByIdAsync(id);
             user.FullName = fullName;
             user.Email = email;
+
+            switch (imageUrl)
+            {
+                case "NoImage": return false;
+                case "FailedToUploadImage": return false;
+            }
+            user.Image = baseUrl + imageUrl;
+
             var result = await _userManager.UpdateAsync(user);
 
             return result.Succeeded;

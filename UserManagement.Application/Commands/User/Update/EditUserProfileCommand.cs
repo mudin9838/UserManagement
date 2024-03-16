@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using UserManagement.Application.Common.Interfaces;
 
 namespace UserManagement.Application.Commands.User.Update
@@ -8,6 +9,7 @@ namespace UserManagement.Application.Commands.User.Update
         public string Id { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
+        public IFormFile? Image { get; set; }
         public List<string> Roles { get; set; }
     }
 
@@ -21,7 +23,8 @@ namespace UserManagement.Application.Commands.User.Update
         }
         public async Task<int> Handle(EditUserProfileCommand request, CancellationToken cancellationToken)
         {
-            var result = await _identityService.UpdateUserProfile(request.Id, request.FullName, request.Email, request.Roles);
+
+            var result = await _identityService.UpdateUserProfile(request.Id, request.FullName, request.Email, request.Roles, request.Image);
             return result ? 1 : 0;
         }
     }

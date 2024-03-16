@@ -91,7 +91,7 @@ public class UserController : ControllerBase
 
     [HttpPut("EditUserProfile/{id}")]
     [ProducesDefaultResponseType(typeof(int))]
-    public async Task<ActionResult> EditUserProfile(string id, [FromBody] EditUserProfileCommand command)
+    public async Task<ActionResult> EditUserProfile(string id, [FromForm] EditUserProfileCommand command)
     {
         if (id == command.Id)
         {

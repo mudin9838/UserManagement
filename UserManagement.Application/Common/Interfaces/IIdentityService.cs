@@ -1,4 +1,6 @@
-﻿namespace UserManagement.Application.Common.Interfaces
+﻿using Microsoft.AspNetCore.Http;
+
+namespace UserManagement.Application.Common.Interfaces
 {
     public interface IIdentityService
     {
@@ -13,7 +15,7 @@
         Task<bool> IsUniqueUserName(string userName);
         Task<List<(string id, string fullName, string userName, string email)>> GetAllUsersAsync();
         Task<List<(string id, string userName, string email, IList<string> roles)>> GetAllUsersDetailsAsync();
-        Task<bool> UpdateUserProfile(string id, string fullName, string email, IList<string> roles);
+        Task<bool> UpdateUserProfile(string id, string fullName, string email, IList<string> roles, IFormFile ProfilePicture);
 
         Task<bool> ChangePassword(string id, string currentPassword, string newPassword);
         // Role Section
