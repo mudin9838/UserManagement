@@ -19,9 +19,9 @@ namespace UserManagement.Infrastructure.Repository.Query
         {
             return await _orderingContext.Customers.ToListAsync();
         }
-        public Task<Customer> GetByIdAsync(long id)
+        public async Task<Customer> GetByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            return await _orderingContext.Customers.FindAsync(id);
         }
 
         public Task<Customer> GetCustomerByEmail(string email)

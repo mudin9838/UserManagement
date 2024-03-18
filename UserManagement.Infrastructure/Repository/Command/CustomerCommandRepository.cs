@@ -1,24 +1,36 @@
 ﻿using UserManagement.Core.Entities;
 using UserManagement.Core.Repositories.Command;
+using UserManagement.Infrastructure.Data;
 
 namespace UserManagement.Infrastructure.Repository.Command
 {
     // Command Repository class for customer
     public class CustomerCommandRepository : ICustomerCommandRepository
     {
-        public Task<Customer> AddAsync(Customer entity)
+        private readonly OrderingContext context;
+
+        public CustomerCommandRepository(OrderingContext context)
         {
-            throw new NotImplementedException();
+            this.context = context;
         }
 
-        public Task DeleteAsync(Customer entity)
+        public async Task<Customer> AddAsync(Customer entity)
         {
-            throw new NotImplementedException();
+            context.Customers.Add(entity);
+            await context.SaveChangesAsync();
+            return entity;
         }
 
-        public Task UpdateAsync(Customer entity)
+        public async Task DeleteAsync(Customer entity)
         {
-            throw new NotImplementedException();
+            context.Customers.Remove(entity);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Customer entity)
+        {
+            context.Customers.Update(entity);
+            await context.SaveChangesAsync();
         }
     }
 }

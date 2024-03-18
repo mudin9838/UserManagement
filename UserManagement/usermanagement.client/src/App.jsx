@@ -1,69 +1,90 @@
-import * as React from "react";
-import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+import * as React from 'react'
+import { ThemeProvider, createTheme, styled } from '@mui/material/styles'
+import Box from '@mui/material/Box'
 
+import CssBaseline from '@mui/material/CssBaseline'
 
+import TopBar from './components/TopBar'
+import SideBar from './components/SideBar'
+import { getDesignTokens } from './theme'
+import { Outlet } from 'react-router-dom'
+import { useEffect } from 'react'
+//import { useMediaQuery } from "@mui/material/useMediaQuery"
 
-import CssBaseline from "@mui/material/CssBaseline";
+//export const Login_BASE_URL = "https://usermsapi.azurewebsites.net";
+//export const Register_BASE_URL = "https://usermsapi.azurewebsites.net";
+//export const Role_BASE_URL = "https://usermsapi.azurewebsites.net";
+//export const BASE_URL = "https://usermsapi.azurewebsites.net";
 
+export const Login_BASE_URL = 'https://localhost:7288'
+export const Register_BASE_URL = 'https://localhost:7288'
+export const Role_BASE_URL = 'https://localhost:7288'
+export const BASE_URL = 'https://localhost:7288'
 
-
-import TopBar from "./components/TopBar";
-import SideBar from "./components/SideBar";
-import { getDesignTokens } from "./theme";
-import { Outlet } from "react-router-dom";
-
-
-export const Login_BASE_URL = "https://usermsapi.azurewebsites.net";
-export const Register_BASE_URL = "https://usermsapi.azurewebsites.net";
-export const Role_BASE_URL = "https://usermsapi.azurewebsites.net";
-export const BASE_URL = "https://usermsapi.azurewebsites.net";
-
-
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}));
+  ...theme.mixins.toolbar
+}))
 
+export default function MiniDrawer () {
+  //var media = useMediaQuery('(min-width:768px)');
+  const [open, setOpen] = React.useState(false)
+  useEffect(() => {
+    function handleResize () {
+      // Get window width
+      const windowWidth = window.innerWidth
+      // Define a breakpoint where the sidebar should be hidden
+      const breakpoint = 768 // Example breakpoint
+      // Update state to hide/show sidebar based on window width
+      setOpen(windowWidth >= breakpoint)
+    }
 
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize)
 
+    // Initial call to handleResize to set initial state based on window width
+    handleResize()
 
-export default function MiniDrawer() {
-
-  const [open, setOpen] = React.useState(false);
-
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
   const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleDrawerClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
+  const [mode, setMode] = React.useState(
+    localStorage.getItem('currentMode')
+      ? localStorage.getItem('currentMode')
+      : 'light'
+  )
+  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode])
 
-  const [mode, setMode] = React.useState(Boolean(localStorage.getItem("currentMode")) ? localStorage.getItem("currentMode"): "light");
-  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
- 
-  
   return (
     <ThemeProvider theme={theme}>
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-    <TopBar open={open} handleDrawerOpen={handleDrawerOpen} setMode={setMode}/>
-     
-     <SideBar open={open} handleDrawerClose={handleDrawerClose}/>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader/>
-          <Outlet/>
-    
-     
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <TopBar
+          open={open}
+          handleDrawerOpen={handleDrawerOpen}
+          setMode={setMode}
+        />
+
+        <SideBar open={open} handleDrawerClose={handleDrawerClose} />
+        <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+          <DrawerHeader />
+          <Outlet />
+        </Box>
       </Box>
-    </Box>
     </ThemeProvider>
-  );
+  )
 }

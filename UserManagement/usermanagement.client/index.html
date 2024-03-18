@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -8,6 +8,18 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      const theme = localStorage.getItem('currentMode');
+      const element = document.querySelector('html')
+      if (theme) {
+        if (theme === 'dark') {
+          element.setAttribute('data-bs-theme', theme)
+        } else if(theme === 'light') {
+          element.setAttribute('data-bs-theme', theme)
+        }
+      }
+
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
