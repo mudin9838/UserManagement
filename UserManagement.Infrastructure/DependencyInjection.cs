@@ -47,7 +47,7 @@ namespace UserManagement.Infrastructure
 
 
             services.AddScoped<IIdentityService, IdentityService>();
-
+            services.AddScoped<IFileService, FileService>();
             services.AddTransient<ICustomerQueryRepository, CustomerQueryRepository>();
             services.AddTransient<ICustomerCommandRepository, CustomerCommandRepository>();
 

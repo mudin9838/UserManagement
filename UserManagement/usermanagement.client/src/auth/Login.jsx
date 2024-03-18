@@ -83,7 +83,7 @@ export default function SignIn() {
           localStorage.setItem("userId", res.data.userId);
           localStorage.setItem("userName", res.data.name);
           localStorage.setItem("roles", res.data.roles);
-
+          localStorage.setItem("image", res.data.image);
           Swal.fire({
             position: "top-end",
             icon: "success",
