@@ -9,7 +9,7 @@
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
     <InvariantGlobalization>false</InvariantGlobalization>
-    <UserSecretsId>787e7f48-fa0b-490b-85dd-6eabf1bd7f0f</UserSecretsId>
+    <UserSecretsId>35776ec5-4bb1-4865-a022-3efaa10e1128</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,6 +33,11 @@
     <ProjectReference Include="..\usermanagement.client\usermanagement.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\users\" />
   </ItemGroup>
 
 </Project>

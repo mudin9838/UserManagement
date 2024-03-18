@@ -21,10 +21,24 @@ export const Register_BASE_URL = 'https://localhost:7288'
 export const Role_BASE_URL = 'https://localhost:7288'
 export const BASE_URL = 'https://localhost:7288'
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
+
+import TopBar from "./components/TopBar";
+import SideBar from "./components/SideBar";
+import { getDesignTokens } from "./theme";
+import { Outlet } from "react-router-dom";
+
+
+export const Login_BASE_URL = "https://localhost:44314";
+export const Register_BASE_URL = "https://localhost:44314";
+export const Role_BASE_URL = "https://localhost:44314";
+export const BASE_URL = "https://localhost:44314";
+
+
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar

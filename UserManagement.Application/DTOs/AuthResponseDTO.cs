@@ -6,5 +6,7 @@
         public string Name { get; set; }
         public IList<string> Roles { get; set; }
         public string Token { get; set; }
+
+        public string Image { get; set; }
     }
 }

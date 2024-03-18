@@ -96,10 +96,13 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
     setAnchorEl(null)
   }
 
-  const [token, setToken] = useState(false)
-  const userNameString = localStorage.getItem('userName')
-  const navigate = useNavigate()
-  let userName
+ 
+
+  const [token, setToken] = useState(false);
+  const userNameString = localStorage.getItem('userName');
+  const image = localStorage.getItem('image');
+  const navigate = useNavigate();
+  let userName;
   try {
     userName = userNameString
   } catch (error) {
@@ -232,18 +235,17 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
             </Badge>
           </IconButton>
           <IconButton
-            size='large'
-            edge='end'
-            aria-label='account of current user'
-            aria-controls={menuId}
-            aria-haspopup='true'
-            onClick={handleProfileMenuOpen}
-            color='inherit'
-          >
-            <Avatar
-              alt='Remy Sharp'
-              src={profilepic}
-            />
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+             <Avatar alt="Remy Sharp" src="https://yt3.ggpht.com/yti/AGOGRCrmhdy4U2zPIn4E6exfLj5oE5Gb9AsTJyY6_LUKmQ=s88-c-k-c0x00ffffff-no-rj" />
+           
+             <Typography color="inherit" >Welcome,{userName ? userName : 'Unknown User'}</Typography>
 
             <Typography color='inherit'>
               Welcome,{userName ? userName : 'Unknown User'}

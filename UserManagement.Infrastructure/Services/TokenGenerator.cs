@@ -22,12 +22,12 @@ namespace UserManagement.Infrastructure.Services
             _expiryMinutes = expiryMinutes;
         }
 
-        public string GenerateJWTToken((string userId, string userName, IList<string> roles) userDetails)
+        public string GenerateJWTToken((string userId, string userName, IList<string> roles, string image) userDetails)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var (userId, userName, roles) = userDetails;
+            var (userId, userName, roles, image) = userDetails;
 
             var claims = new List<Claim>()
             {
