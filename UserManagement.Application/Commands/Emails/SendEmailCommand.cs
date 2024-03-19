@@ -16,12 +16,12 @@ namespace UserManagement.Application.Commands.Emails
 
         public SendEmailCommandHandler(IEmailService emailService)
         {
-            emailService = _emailService;
+            _emailService = emailService;
         }
         public async Task<string> Handle(SendEmailCommand request, CancellationToken cancellationToken)
         {
             var response = await _emailService.SendEmailAsync(request.Email, request.Message);
-            return response;
+            return response == null ? "Failed due to" : response;
         }
     }
 }
