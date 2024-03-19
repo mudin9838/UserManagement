@@ -217,7 +217,7 @@ namespace UserManagement.Infrastructure.Services
             user.Image = baseUrl + imageUrl;
 
             var result = await _userManager.UpdateAsync(user);
-
+            await _signInManager.RefreshSignInAsync(user);
             return result.Succeeded;
         }
 
