@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: "https://localhost:7288",
+  baseURL: "https://usermsapi.azurewebsites.net",
   headers: {
     'Content-Type': 'application/json',
   },
