@@ -10,7 +10,7 @@ import {
 import AddCustomer from './AddCustomer'
 import EditCustomer from './EditCustomer'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-import './customer.css'
+//import './customer.css'
 import DeleteCustomer from './DeleteCustomer'
 import { useTheme } from '../../hooks/useTheme'
 
