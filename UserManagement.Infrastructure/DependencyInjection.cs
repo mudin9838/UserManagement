@@ -6,6 +6,7 @@ using UserManagement.Application.Common.Interfaces;
 using UserManagement.Core.Repositories.Command;
 using UserManagement.Core.Repositories.Query;
 using UserManagement.Infrastructure.Data;
+using UserManagement.Infrastructure.Helpers;
 using UserManagement.Infrastructure.Identity;
 using UserManagement.Infrastructure.Repository.Command;
 using UserManagement.Infrastructure.Repository.Query;
@@ -26,6 +27,8 @@ namespace UserManagement.Infrastructure
             .AddEntityFrameworkStores<OrderingContext>()
             .AddDefaultTokenProviders();
 
+            var emailSettings = new EmailSettings();
+            configuration.GetSection(nameof(emailSettings)).Bind(emailSettings);
             services.Configure<IdentityOptions>(options =>
             {
                 // Default Lockout settings.
@@ -45,7 +48,7 @@ namespace UserManagement.Infrastructure
                 options.User.RequireUniqueEmail = true;
             });
 
-
+            services.AddSingleton(emailSettings);
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IEmailService, EmailService>();
