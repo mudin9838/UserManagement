@@ -21,7 +21,7 @@ namespace UserManagement.Server.Controllers
 
     // Authorize with a specific scheme
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin,Member,User")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CustomerController : ControllerBase
     {
         private readonly IMediator _mediator;

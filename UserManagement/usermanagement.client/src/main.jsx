@@ -16,23 +16,27 @@ import EditUser from "./pages/users/EditUser";
 import AddUser from "./pages/users/AddUser";
 import UsersRole from "./pages/usersrole/UsersRole";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
+import AddCustomer from "./pages/customer/AddCustomer.jsx";
+import Customers from "./pages/customer/Customers.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <Routes>
-      <Route index path="/Login" element={<Login />} />
-      <Route element={<PrivateRoutes />}>
-        <Route path="/" element={<App />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/add-role" element={<AddRole />} />
-          <Route path="/dashboard/roles" element={<RoleList />} />
-          <Route path="/dashboard/edit-role/:id" element={<EditRole />} />
-          <Route path="/dashboard/add-user" element={<AddUser />} />
-          <Route path="/dashboard/users" element={<UserList />} />
-          <Route path="/dashboard/usersrole" element={<UsersRole />} />
-          <Route path="/dashboard/edit-user/:id" element={<EditUser />} />
-        </Route>
-      </Route>
-    </Routes>
-  </BrowserRouter>
+    <BrowserRouter>
+        <Routes>
+            <Route index path="/Login" element={<Login />} />
+            <Route element={<PrivateRoutes />}>
+                <Route path="/" element={<App />}>
+                    <Route path="/dashboard/roles" element={<RoleList />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/dashboard/add-user" element={<AddUser />} />
+                    <Route path="/dashboard/add-role" element={<AddRole />} />
+                    <Route path="/dashboard/edit-role/:id" element={<EditRole />} />
+                    <Route path="/dashboard/users" element={<UserList />} />
+                    <Route path="/dashboard/usersrole" element={<UsersRole />} />
+                    <Route path="/dashboard/edit-user/:id" element={<EditUser />} />
+                    <Route path="/customers" element={<Customers />} />
+                    <Route path="/customers/add" element={<AddCustomer />} />
+                </Route>
+            </Route>
+        </Routes>
+    </BrowserRouter>
 );

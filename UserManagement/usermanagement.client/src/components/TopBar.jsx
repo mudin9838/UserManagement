@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { useEffect, useState } from 'react'
+import profilepic from '../images/profile.jpg'
+import MenuIcon from '@mui/icons-material/Menu'
+import SearchIcon from '@mui/icons-material/Search'
 import {
   Avatar,
   Badge,
@@ -15,91 +15,86 @@ import {
   Toolbar,
   Typography,
   styled,
-  useTheme,
-} from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MuiAppBar from "@mui/material/AppBar";
-import {
-  DarkModeOutlined,
-  LightModeOutlined,
-
-} from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-const drawerWidth = 240;
+  useTheme
+} from '@mui/material'
+import { alpha } from '@mui/material/styles'
+import MailIcon from '@mui/icons-material/Mail'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import MuiAppBar from '@mui/material/AppBar'
+import { DarkModeOutlined, LightModeOutlined } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+const drawerWidth = 240
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: prop => prop !== 'open'
 })(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
+  transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
+    duration: theme.transitions.duration.leavingScreen
   }),
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+      duration: theme.transitions.duration.enteringScreen
+    })
+  })
+}))
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25)
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
+    width: 'auto'
+  }
+}))
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+}))
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
+  color: 'inherit',
+  '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch'
+    }
+  }
+}))
 
 const TopBar = ({ open, handleDrawerOpen, setMode }) => {
+  const theme = useTheme()
+  const [anchorEl, setAnchorEl] = React.useState(null)
 
-  const theme = useTheme();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const isMenuOpen = Boolean(anchorEl)
 
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleProfileMenuOpen = event => {
+    setAnchorEl(event.currentTarget)
+  }
   const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
  
 
@@ -109,74 +104,73 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
   const navigate = useNavigate();
   let userName;
   try {
-      userName = userNameString;
+    userName = userNameString
   } catch (error) {
-      console.error("Error parsing userName:", error);
-      userName = null;
+    console.error('Error parsing userName:', error)
+    userName = null
   }
 
-  let role = localStorage.getItem('roles') || "";
+  let role = localStorage.getItem('roles') || ''
 
-  let userRole = "";
+  let userRole = ''
 
-  if (role === "Admin") {
-      userRole = "Admin";
+  if (role === 'Admin') {
+    userRole = 'Admin'
   }
 
-  if (role === "Management") {
-      userRole = "Management";
+  if (role === 'Management') {
+    userRole = 'Management'
   }
 
-  if (role === "User") {
-      userRole = "User";
+  if (role === 'User') {
+    userRole = 'User'
   }
   const logout = () => {
-      localStorage.clear();
-      navigate('/Login');
-    };
+    localStorage.clear()
+    navigate('/Login')
+  }
   useEffect(() => {
-      var isAuth = localStorage.getItem('auth');
+    var isAuth = localStorage.getItem('auth')
 
-      if (isAuth) {
-          setToken(true);
-      }
-  }, []);
+    if (isAuth) {
+      setToken(true)
+    }
+  }, [])
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = 'primary-search-account-menu'
   const renderMenu = (
-    <Menu  sx={{ mt: '45px' }}
+    <Menu
+      sx={{ mt: '45px' }}
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: 'top',
-        horizontal: 'right',
+        horizontal: 'right'
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'right',
+        horizontal: 'right'
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem  onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
+  )
 
-    
-  );
- 
   return (
-    <AppBar position="fixed" open={open}>
+    <AppBar position='fixed' open={open}>
       <Toolbar>
         <IconButton
-          color="inherit"
-          aria-label="open drawer"
+          color='inherit'
+          aria-label='open drawer'
           onClick={handleDrawerOpen}
-          edge="start"
+          edge='start'
           sx={{
             marginRight: 5,
-            ...(open && { display: "none" }),
+            ...(open && { display: 'none' })
           }}
         >
           <MenuIcon />
@@ -186,25 +180,23 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
+            placeholder='Search…'
+            inputProps={{ 'aria-label': 'search' }}
           />
         </Search>
 
         <Box flexGrow={1}></Box>
-        <Stack direction={"row"}>
-          {theme.palette.mode === "light" ? (
+        <Stack direction={'row'}>
+          {theme.palette.mode === 'light' ? (
             <IconButton
               onClick={() => {
                 localStorage.setItem(
-                  "currentMode",
-                  theme.palette.mode == "dark" ? "light" : "dark"
-                );
-                setMode((prevMode) =>
-                  prevMode === "light" ? "dark" : "light"
-                );
+                  'currentMode',
+                  theme.palette.mode == 'dark' ? 'light' : 'dark'
+                )
+                setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'))
               }}
-              color="inherit"
+              color='inherit'
             >
               <LightModeOutlined />
             </IconButton>
@@ -212,37 +204,35 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
             <IconButton
               onClick={() => {
                 localStorage.setItem(
-                  "currentMode",
-                  theme.palette.mode == "dark" ? "light" : "dark"
-                );
-                setMode((prevMode) =>
-                  prevMode === "light" ? "dark" : "light"
-                );
+                  'currentMode',
+                  theme.palette.mode == 'dark' ? 'light' : 'dark'
+                )
+                setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'))
               }}
-              color="inherit"
+              color='inherit'
             >
               <DarkModeOutlined />
             </IconButton>
           )}
 
           <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
+            size='large'
+            aria-label='show 4 new mails'
+            color='inherit'
           >
-            <Badge badgeContent={4} color="error">
+            <Badge badgeContent={4} color='error'>
               <MailIcon />
             </Badge>
           </IconButton>
 
           <IconButton
-            size="large"
-            aria-label="show 4 new mails"
-            color="inherit"
+            size='large'
+            aria-label='show 4 new mails'
+            color='inherit'
           >
-            <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+            <Badge badgeContent={17} color='error'>
+              <NotificationsIcon />
+            </Badge>
           </IconButton>
           <IconButton
               size="large"
@@ -253,19 +243,19 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
+             <Avatar alt="Remy Sharp" src="https://yt3.ggpht.com/yti/AGOGRCrmhdy4U2zPIn4E6exfLj5oE5Gb9AsTJyY6_LUKmQ=s88-c-k-c0x00ffffff-no-rj" />
+           
+             <Typography color="inherit" >Welcome,{userName ? userName : 'Unknown User'}</Typography>
 
-             <Avatar alt="Remy Sharp" src={image ? image : 'https://yt3.ggpht.com/yti/AGOGRCrmhdy4U2zPIn4E6exfLj5oE5Gb9AsTJyY6_LUKmQ=s88-c-k-c0x00ffffff-no-rj'} />
-
-             <Typography color="inherit" >{userName ? userName : 'Unknown User'}</Typography>
-
-             </IconButton> 
-            {renderMenu}
-      
-        
+            <Typography color='inherit'>
+              Welcome,{userName ? userName : 'Unknown User'}
+            </Typography>
+          </IconButton>
+          {renderMenu}
         </Stack>
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}
 
-export default TopBar;
+export default TopBar
