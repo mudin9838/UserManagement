@@ -9,17 +9,14 @@ import SideBar from './components/SideBar'
 import { getDesignTokens } from './theme'
 import { Outlet } from 'react-router-dom'
 import { useEffect } from 'react'
-//import { useMediaQuery } from "@mui/material/useMediaQuery"
 
-//export const Login_BASE_URL = "https://usermsapi.azurewebsites.net";
-//export const Register_BASE_URL = "https://usermsapi.azurewebsites.net";
-//export const Role_BASE_URL = "https://usermsapi.azurewebsites.net";
-//export const BASE_URL = "https://usermsapi.azurewebsites.net";
 
-export const Login_BASE_URL = 'https://localhost:7288'
-export const Register_BASE_URL = 'https://localhost:7288'
-export const Role_BASE_URL = 'https://localhost:7288'
-export const BASE_URL = 'https://localhost:7288'
+export const Login_BASE_URL = "https://usermsapi.azurewebsites.net";
+export const Register_BASE_URL = "https://usermsapi.azurewebsites.net";
+export const Role_BASE_URL = "https://usermsapi.azurewebsites.net";
+export const BASE_URL = "https://usermsapi.azurewebsites.net";
+
+
 
 
 import TopBar from "./components/TopBar";
