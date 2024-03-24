@@ -56,7 +56,7 @@ export function postData(endPoint, inputObj) {
         method: 'POST',
         headers: {
             "access-control-allow-origin": "*",
-            'Accept': 'application/json',
+             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         },
@@ -103,8 +103,27 @@ export function putData(endPoint, obj) {
         method: 'PUT',
         headers: {
             "access-control-allow-origin": "*",
+            'Authorization': 'Bearer ' + token
+        },
+        body: obj
+
+    }
+    return fetch(BASE_URL + endPoint, payload)
+        .then(function (response) {
+            return response.json();
+        }).then(function (result) {
+            return result;
+        }).catch(function (error) {
+            console.log(error);
+        });
+}
+export function putDataOnly(endPoint, obj) {
+    let token = localStorage.getItem('auth');
+    let payload = {
+        method: 'PUT',
+        headers: {
+            "access-control-allow-origin": "*",
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify(obj)
