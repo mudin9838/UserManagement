@@ -104,6 +104,7 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
   const [token, setToken] = useState(false)
   const userNameString = localStorage.getItem('userName')
   const image = localStorage.getItem('image')
+
   const navigate = useNavigate()
   let userName
   try {
@@ -252,8 +253,10 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-             <Avatar alt="Remy Sharp" src={image ? image : "https://yt3.ggpht.com/yti/AGOGRCrmhdy4U2zPIn4E6exfLj5oE5Gb9AsTJyY6_LUKmQ=s88-c-k-c0x00ffffff-no-rj"} />
-           
+
+            <Avatar alt="Remy Sharp" src={image ? image : "https://yt3.ggpht.com/yti/AGOGRCrmhdy4U2zPIn4E6exfLj5oE5Gb9AsTJyY6_LUKmQ=s88-c-k-c0x00ffffff-no-rj"} />
+
+          
              <Typography color="inherit" >Welcome,{userName ? userName : 'Unknown User'}</Typography>
 
              </IconButton> 
