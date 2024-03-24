@@ -1,9 +1,10 @@
 // api.js
 
 import axios from 'axios';
+import { BASE_URL } from '../App';
 
 const instance = axios.create({
-  baseURL: "https://usermsapi.azurewebsites.net",
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
