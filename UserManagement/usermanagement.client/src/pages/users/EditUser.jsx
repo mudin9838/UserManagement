@@ -21,11 +21,24 @@ const EditUser = () => {
     // Add more properties as needed
   });
   const [role, setRoles] = useState([]);
-
+  const [image, setImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null)
   const handleChange = (event) => {
     event.persist();
     setUserDetails({ ...userDetails, [event.target.name]: event.target.value });
   };
+
+  const handleImageChange = e => {
+    if (e.target.files[0]) {
+      const selectedImage = e.target.files[0]
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setPreviewImage(reader.result)
+      }
+      reader.readAsDataURL(selectedImage)
+      setImage(e.target.files[0])
+    }
+  }
 
   useEffect(() => {
     getData(`/api/User/GetUserDetails/${id}`).then((result) => {
@@ -64,15 +77,19 @@ const EditUser = () => {
     });
   };
   const handleFormSubmit = (event) => {
+    const formData = new FormData();
+    formData.append("id", userDetails.id);
+    formData.append("fullName", userDetails.fullName);
+    formData.append("email", userDetails.email);
+    formData.append("roles", userDetails.roles);
+    // @ts-ignore
+    formData.append("image", image);
     event.preventDefault();
-    let userProfile = {
-      id: userDetails.id,
-      fullName: userDetails.fullName,
-      email: userDetails.email,
-      roles: userDetails.roles,
-    };
-    console.log(userProfile);
-    putData(`/api/User/EditUserProfile/${id}`, userProfile).then((res) => {
+ 
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+    putData(`/api/User/EditUserProfile/${id}`, formData).then((res) => {
       let responseJson = res;
       console.log(res);
       if (responseJson) {
@@ -98,104 +115,87 @@ const EditUser = () => {
 
   return (
     <div>
-      <div style={{ display: "flex" }}>
-        <div style={{ flex: 1, padding: "20px" }}>
-          <div className="container py-3">
-            <div className="container pt-1">
-              <div className="row">
-                <div className="col pt-2">
-                  <p className="h5 fw-bold">Edit User</p>
-                </div>
-                <div className="col text-end">
-                  <Link to="/dashboard/roles" className="btn btn-success">
-                    <i
-                      className="fa fa-chevron-circle-left"
-                      aria-hidden="true"
-                    ></i>{" "}
-                    Back
-                  </Link>
-                </div>
-              </div>
-              <hr />
+      <form action="" autoComplete="off" onSubmit={handleFormSubmit}>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group form-floating mb-3">
+              <input
+                type="text"
+                id="floatingInput1"
+                name="fullName"
+                value={userDetails.fullName}
+                className="form-control"
+                onChange={handleChange}
+                required
+              />
+              <label htmlFor="floatingInput">Full Name</label>
+            </div>
+            <div className="form-group form-floating mb-3">
+              <input
+                type="email"
+                id="floatingEmail"
+                name="fullName"
+                value={userDetails.email}
+                className="form-control"
+                onChange={handleChange}
+                placeholder="email@example.com"
+                required
+              />
+              <label htmlFor="floatingEmail">Email</label>
             </div>
 
-            <form action="" autoComplete="off" onSubmit={handleFormSubmit}>
-              <div className="row">
-                <div className="col-xs-12 col-sm-8 col-md-6 mt-3">
-                  <div className="row mb-3">
-                    <div className="col-xs-12 col-sm-12 col-md-6">
-                      <label htmlFor="fullName" className="form-label">
-                        Full Name
-                      </label>
-                      <input
-                        type="text"
-                        name="fullName"
-                        value={userDetails.fullName}
-                        className="form-control"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="col-xs-12 col-sm-12 col-md-6">
-                      <label htmlFor="userName" className="form-label">
-                        User Name
-                      </label>
-                      <input
-                        type="text"
-                        name="userName"
-                        value={userDetails.userName}
-                        className="form-control"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    <div className="col-xs-12 col-sm-12 col-md-6">
-                      <label htmlFor="email" className="form-label">
-                        Email
-                      </label>
-                      <input
-                        type="text"
-                        name="email"
-                        value={userDetails.email}
-                        className="form-control"
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="row mb-3">
-                    <div className="col-12">
-                      <label className="form-label">User Role</label>
-                      <select
-                        name="roles"
-                        id="roles"
-                        value={userDetails.roles}
-                        onChange={handleChange}
-                        className="form-control"
-                      >
-                        <option value="" disabled>
-                          Select a role
-                        </option>
-                        {role.map((item) => (
-                          <option key={item.id} value={item.roleName}>
-                            {item.roleName}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <button className="btn btn-success mt-5" type="submit">
-                    <i className="fa fa-check-circle" aria-hidden="true"></i>{" "}
-                    Update User
-                  </button>
-                </div>
-              </div>
-            </form>
+            <div className="form-group form-floating mb-3">
+              <select
+                className="form-select"
+                id="floatingSelect"
+                value={userDetails.roles}
+                onChange={handleChange}
+                aria-label="Floating label select example"
+              >
+                <option selected disabled>
+                  Select a role
+                </option>
+                {role.map((item) => (
+                  <option key={item.id} value={item.roleName}>
+                    {item.roleName}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="floatingSelect">User Role</label>
+            </div>
+            <div>
+              <button type="submit" className="btn btn-primary">
+                Update User
+              </button>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <label style={{ width: "100%" }}></label>
+              <img
+                src={previewImage}
+                alt="Preview"
+                style={{ maxWidth: "350px", maxHeight: "350px" }}
+              />
+              <input
+                type="file"
+                className="form-control"
+                style={{
+                  border: "0px!important",
+                  padding: "0px",
+                  paddingTop: "10px",
+                  paddingBottom: "30px",
+                  width: "58.5%",
+                }}
+                onChange={handleImageChange}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
-
 export default EditUser;
+
+

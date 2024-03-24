@@ -116,6 +116,7 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
 
   let role = localStorage.getItem('roles') || "";
 
+
   let userRole = "";
 
   if (role === "Admin") {
@@ -252,9 +253,10 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
+
             <Avatar alt="Remy Sharp" src={image ? image : "https://yt3.ggpht.com/yti/AGOGRCrmhdy4U2zPIn4E6exfLj5oE5Gb9AsTJyY6_LUKmQ=s88-c-k-c0x00ffffff-no-rj"} />
 
-           
+          
              <Typography color="inherit" >Welcome,{userName ? userName : 'Unknown User'}</Typography>
 
              </IconButton> 
