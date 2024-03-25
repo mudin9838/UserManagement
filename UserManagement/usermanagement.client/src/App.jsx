@@ -8,6 +8,8 @@ import TopBar from './components/TopBar'
 import SideBar from './components/SideBar'
 import { getDesignTokens } from './theme'
 import { Outlet } from 'react-router-dom'
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify'
 
 const buildMode = import.meta.env.MODE;
 
@@ -66,7 +68,9 @@ export default function MiniDrawer() {
     const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode])
 
     return (
+        
         <ThemeProvider theme={theme}>
+              <ToastContainer/>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <TopBar
@@ -82,5 +86,6 @@ export default function MiniDrawer() {
                 </Box>
             </Box>
         </ThemeProvider>
+      
     )
 }

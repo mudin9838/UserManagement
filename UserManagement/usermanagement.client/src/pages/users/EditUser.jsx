@@ -6,6 +6,7 @@ import { BASE_URL } from "../../App";
 import Sidebar from "../sidebar/sidebar";
 
 import { getData, putData } from "../../services/AccessAPI";
+import showToast from "../../components/toastify/Toastify";
 
 const EditUser = () => {
   const navigate = useNavigate();
@@ -56,12 +57,7 @@ const EditUser = () => {
           // Add more properties as needed
         });
       } else if (!responseJson) {
-        Swal.fire({
-          title: "Warning!",
-          icon: "warning",
-          text: "No user ID Found",
-          button: "Ok!",
-        });
+        showToast('error','No User Id found!');
         navigate("/dashboard/users");
       }
       loadRoles();
@@ -94,21 +90,10 @@ const EditUser = () => {
       console.log(res);
       if (responseJson) {
         console.log(responseJson);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Record Updated Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+       showToast('success','User updated successfully!');
         navigate("/dashboard/users");
       } else {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Oops...",
-          text: "Error updating user",
-        });
+        showToast('error','Error updating user!');
       }
     });
   };

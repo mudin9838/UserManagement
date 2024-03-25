@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Role_BASE_URL } from '../../App';
 import Sidebar from '../sidebar/sidebar';
 import { getData, putData } from '../../services/AccessAPI';
+import showToast from '../../components/toastify/Toastify';
 
 const EditRole = () => {
   const navigate = useNavigate();
@@ -34,12 +35,7 @@ const EditRole = () => {
           // Add more properties as needed
         });
       } else if (!responseJson) {
-        Swal.fire({
-          title: 'Warning!',
-          icon: 'warning',
-          text: 'No Course ID Found',
-          button: 'Ok!',
-        });
+        showToast("error", "Role ID found!");
         navigate('/dashboard/roles');
       }
     });
@@ -52,21 +48,10 @@ const EditRole = () => {
       let responseJson = res;
       if (responseJson) {
         console.log(responseJson);
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Record Updated Successfully',
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        showToast("success", "Role Updated Successfully!");
         navigate('/dashboard/roles');
       } else {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Error updating course',
-        });
+        showToast("error", "Failed!");
       }
     });
   };
