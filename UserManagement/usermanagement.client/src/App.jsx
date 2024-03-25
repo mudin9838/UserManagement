@@ -11,10 +11,10 @@ import { Outlet } from 'react-router-dom'
 
 const buildMode = import.meta.env.MODE;
 
-export const Login_BASE_URL = buildMode === "development" ? "https://localhost:7288" : "https://usermsapi.azurewebsites.net";
-export const Register_BASE_URL = buildMode === "development" ? "https://localhost:7288" : "https://usermsapi.azurewebsites.net";
-export const Role_BASE_URL = buildMode === "development" ? "https://localhost:7288" : "https://usermsapi.azurewebsites.net";
-export const BASE_URL = buildMode === "development" ? "https://localhost:7288" : "https://usermsapi.azurewebsites.net";
+export const Login_BASE_URL = buildMode === "development" ? "https://localhost:44314" : "https://usermsapi.azurewebsites.net";
+export const Register_BASE_URL = buildMode === "development" ? "https://localhost:44314" : "https://usermsapi.azurewebsites.net";
+export const Role_BASE_URL = buildMode === "development" ? "https://localhost:44314" : "https://usermsapi.azurewebsites.net";
+export const BASE_URL = buildMode === "development" ? "https://localhost:44314" : "https://usermsapi.azurewebsites.net";
 
 
 const DrawerHeader = styled("div")(({ theme }) => ({
