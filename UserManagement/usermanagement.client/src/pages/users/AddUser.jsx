@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 import { BASE_URL } from "../../App";
 import { getData, postData } from "../../services/AccessAPI";
+import showToast from "../../components/toastify/Toastify";
 
 const AddUser = () => {
   const navigate = useNavigate();
@@ -62,24 +63,15 @@ const AddUser = () => {
         console.log(res);
         if (responseJson) {
           console.log(responseJson);
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "User Added Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          showToast("success", "User Added Successfully!");
+
 
           navigate("/dashboard/users");
         }
       })
       .catch((e) => {
-        Swal.fire({
-          title: "Warning !",
-          icon: "warning",
-          text: e,
-          button: "Ok!",
-        });
+        showToast("error", "Error adding user!");
+
       });
   };
 

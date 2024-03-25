@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import Sidebar from "../sidebar/sidebar";
 import { BASE_URL } from "../../App";
 import { deleteData, getData } from "../../services/AccessAPI";
+import showToast from "../../components/toastify/Toastify";
 
 const UserList = () => {
   const navigate = useNavigate();
@@ -42,14 +43,7 @@ const UserList = () => {
   //   }
   // };
 
-  const handleApiError = (error) => {
-    Swal.fire({
-      title: "Error!",
-      text: error.message || "Something went wrong!",
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
-  };
+
   // const csvHeaders = [
   //   { label: 'Id', key: 'Id' },
   //   { label: 'User Name', key: 'RoleName' },
@@ -73,18 +67,17 @@ const UserList = () => {
             let responseJson = res;
             if (res) {
               console.log(responseJson);
-              Swal.fire({
-                title: "Deleted!",
-                text: "The user has been deleted.",
-                icon: "success",
-              });
+              showToast("success", "User deleted successfully!");
+
               loadUsers(); // Reload the user list after deletion
             } else {
-              handleApiError(new Error("Error deleting role"));
+              showToast("error", "Error deleting user!");
+
             }
           })
           .catch((error) => {
-            handleApiError(error);
+            showToast("error", "Error deleting role!");
+
           });
       }
     });

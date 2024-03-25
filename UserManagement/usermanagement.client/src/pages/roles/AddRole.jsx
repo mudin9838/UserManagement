@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Swal from "sweetalert2";
-
-import Sidebar from "../sidebar/sidebar";
-import { Role_BASE_URL } from "../../App"; // Adjust the import based on your application
 import { postData } from "../../services/AccessAPI";
-
+import showToast from "../../components/toastify/Toastify";
 const AddRole = () => {
   const navigate = useNavigate();
-
   const [inputs, setInputs] = useState({
     roleName: "",
     //id: '',
@@ -53,24 +47,13 @@ const AddRole = () => {
         let responseJson = res;
         if (responseJson) {
           console.log(responseJson);
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Record Inserted Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          showToast("success", "Role Added Successfully!");
 
           navigate("/dashboard/roles");
         }
       })
       .catch((e) => {
-        Swal.fire({
-          title: "Warning!",
-          icon: "warning",
-          text: e,
-          button: "Ok!",
-        });
+        showToast("error", "Failed! Somthing went wrong");
       });
   };
 

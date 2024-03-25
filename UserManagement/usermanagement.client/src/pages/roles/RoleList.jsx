@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Sidebar from "../sidebar/sidebar";
 
 import { deleteData, getData } from "../../services/AccessAPI";
+import showToast from "../../components/toastify/Toastify";
 
 const RoleList = () => {
   const navigate = useNavigate();
@@ -27,15 +28,6 @@ const RoleList = () => {
     });
   };
 
-  const handleApiError = (error) => {
-    Swal.fire({
-      title: "Error!",
-      text: error.message || "Something went wrong!",
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
-  };
-
   const deleteRole = (e, id) => {
     e.preventDefault();
 
@@ -54,18 +46,15 @@ const RoleList = () => {
             let responseJson = res;
             if (res) {
               console.log(responseJson);
-              Swal.fire({
-                title: "Deleted!",
-                text: "The role has been deleted.",
-                icon: "success",
-              });
+              showToast("success", "Role Deleted Successfully!");
               loadRoles(); // Reload the role list after deletion
             } else {
-              handleApiError(new Error("Error deleting role"));
+              showToast("error", "Error deleting role!");
             }
           })
           .catch((error) => {
-            handleApiError(error);
+            showToast("error", "Error deleting role!");
+
           });
       }
     });
