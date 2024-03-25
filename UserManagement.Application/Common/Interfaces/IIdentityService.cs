@@ -17,7 +17,7 @@ namespace UserManagement.Application.Common.Interfaces
         Task<List<(string id, string userName, string email, IList<string> roles)>> GetAllUsersDetailsAsync();
         Task<bool> UpdateUserProfile(string id, string fullName, string email, IList<string> roles, IFormFile file);
 
-        Task<bool> ChangePassword(string id, string currentPassword, string newPassword);
+        Task<bool> ChangePassword(string userName, string currentPassword, string newPassword);
         // Role Section
         Task<bool> CreateRoleAsync(string roleName);
         Task<bool> DeleteRoleAsync(string roleId);

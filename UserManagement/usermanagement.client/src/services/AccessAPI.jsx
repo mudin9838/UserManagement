@@ -117,16 +117,17 @@ export function putData(endPoint, obj) {
             console.log(error);
         });
 }
-export function putDataOnly(endPoint, obj) {
+export function putDataJson(endPoint, updateObj) {
     let token = localStorage.getItem('auth');
     let payload = {
         method: 'PUT',
         headers: {
             "access-control-allow-origin": "*",
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + token
         },
-        body: JSON.stringify(obj)
+        body: JSON.stringify(updateObj)
 
     }
     return fetch(BASE_URL + endPoint, payload)

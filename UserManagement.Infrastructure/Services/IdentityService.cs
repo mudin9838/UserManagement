@@ -221,9 +221,9 @@ namespace UserManagement.Infrastructure.Services
             return result.Succeeded;
         }
 
-        public async Task<bool> ChangePassword(string id, string currentPassword, string newPassword)
+        public async Task<bool> ChangePassword(string userName, string currentPassword, string newPassword)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByNameAsync(userName);
             var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
             return result.Succeeded;
         }

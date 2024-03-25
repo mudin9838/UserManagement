@@ -5,7 +5,7 @@ namespace UserManagement.Application.Commands.User.Update
 {
     public class ChangeUserPasswordCommand : IRequest<int>
     {
-        public string Id { get; set; }
+        public string UserName { get; set; }
         public string CurrentPassword { get; set; }
         public string NewPassword { get; set; }
 
@@ -23,7 +23,7 @@ namespace UserManagement.Application.Commands.User.Update
         }
         public async Task<int> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
         {
-            var result = await _identityService.ChangePassword(request.Id, request.CurrentPassword, request.NewPassword);
+            var result = await _identityService.ChangePassword(request.UserName, request.CurrentPassword, request.NewPassword);
             return result ? 1 : 0;
         }
     }

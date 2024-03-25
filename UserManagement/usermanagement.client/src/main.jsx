@@ -18,6 +18,8 @@ import UsersRole from "./pages/usersrole/UsersRole";
 import Dashboard from "./components/dashboard/Dashboard.jsx";
 import AddCustomer from "./pages/customer/AddCustomer.jsx";
 import Customers from "./pages/customer/Customers.jsx";
+import ChangePassword from "./pages/account/ChangePassword.jsx";
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
@@ -33,6 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     <Route path="/dashboard/users" element={<UserList />} />
                     <Route path="/dashboard/usersrole" element={<UsersRole />} />
                     <Route path="/dashboard/edit-user/:id" element={<EditUser />} />
+                    <Route path="/dashboard/change-password" element={<ChangePassword />} />
                     <Route path="/customers" element={<Customers />} />
                     <Route path="/customers/add" element={<AddCustomer />} />
                 </Route>

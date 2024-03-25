@@ -134,6 +134,9 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
       localStorage.clear();
       navigate('/Login');
     };
+    const changePassword = () => {
+      navigate('/dashboard/change-password');
+    };
   useEffect(() => {
       var isAuth = localStorage.getItem('auth');
 
@@ -160,6 +163,7 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
       onClose={handleMenuClose}
     >
       <MenuItem  onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem  onClick={changePassword}>Change Password</MenuItem>
       <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
 

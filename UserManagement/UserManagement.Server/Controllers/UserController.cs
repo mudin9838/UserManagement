@@ -105,11 +105,11 @@ public class UserController : ControllerBase
     }
 
 
-    [HttpPut("ChangePsssword/{id}")]
+    [HttpPut("ChangePassword/{userName}")]
     [ProducesDefaultResponseType(typeof(int))]
-    public async Task<ActionResult> ChangePsssword(string id, [FromBody] ChangeUserPasswordCommand command)
+    public async Task<ActionResult> ChangePsssword(string userName, [FromBody] ChangeUserPasswordCommand command)
     {
-        if (id == command.Id)
+        if (userName == command.UserName)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
