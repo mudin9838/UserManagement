@@ -25,11 +25,11 @@ const Customers = () => {
 
     useEffect(() => {
       if (localStorage.getItem("auth") !== null) {
-        loadUsers();
+        loadCustomers();
       }
     }, []);
 
-    const loadUsers = async () => {
+    const loadCustomers = async () => {
       await getData("/api/Customer/GetAll").then((result) => {
         let responseJson = result;
         console.log(result);

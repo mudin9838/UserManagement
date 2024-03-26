@@ -10,7 +10,7 @@ import { getDesignTokens } from './theme'
 import { Outlet } from 'react-router-dom'
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify'
-
+import './App.css'; 
 const buildMode = import.meta.env.MODE;
 
 export const Login_BASE_URL = buildMode === "development" ? "https://localhost:44314" : "https://usermsapi.azurewebsites.net";
