@@ -24,7 +24,8 @@ import {
     PieChartOutlineOutlined,
     ReceiptLongOutlined,
     TimelineOutlined,
-    Business
+    Business,
+    EmailOutlined
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -91,6 +92,7 @@ const Array2 = [
         path: "/dashboard/usersrole",
     },
     { text: "Customers", icon: <Business />, path: "/customers" },
+    { text: "Email", icon: <EmailOutlined />, path: "/dashboard/emails" },
 ];
 
 const SideBar = ({ open, handleDrawerClose }) => {

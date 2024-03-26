@@ -72,7 +72,26 @@ export function postData(endPoint, inputObj) {
             console.log(error);
         });
 }
+export function postDataForAttachment(endPoint, inputObj) {
+    let token = localStorage.getItem('auth');
+    let payload = {
+        method: 'POST',
+        headers: {
+            "access-control-allow-origin": "*",
+            'Authorization': 'Bearer ' + token
+        },
+        body: inputObj
 
+    }
+    return fetch(BASE_URL + endPoint, payload)
+        .then(function (response) {
+            return response.json();
+        }).then(function (result) {
+            return result;
+        }).catch(function (error) {
+            console.log(error);
+        });
+}
 export function deleteData(endPoint) {
     let token = localStorage.getItem('auth');
     let payload = {
