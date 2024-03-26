@@ -1,7 +1,9 @@
 ﻿using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Http;
 using MimeKit;
 using UserManagement.Application.Common.Interfaces;
 using UserManagement.Infrastructure.Helpers;
+
 
 namespace UserManagement.Infrastructure.Services
 {
@@ -23,36 +25,68 @@ namespace UserManagement.Infrastructure.Services
 
         #region Handle functions
 
-        public async Task<string> SendEmailAsync(string email, string Message)
+        public async Task<string> SendEmailAsync(string EmailToId, string EmailToName, string EmailSubject, string EmailBody, IFormFileCollection EmailAttachments)
         {
+
             try
             {
-                //sending the Message of passwordResetLink
-                using (var client = new SmtpClient())
+                using (MimeMessage emailMessage = new MimeMessage())
                 {
-                    await client.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
-                    client.Authenticate(_emailSettings.FromEmail, _emailSettings.Password);
-                    var bodybuilder = new BodyBuilder
+                    MailboxAddress emailFrom = new MailboxAddress(_emailSettings.SenderName, _emailSettings.FromEmail);
+                    emailMessage.From.Add(emailFrom);
+                    MailboxAddress emailTo = new MailboxAddress(EmailToName, EmailToId);
+                    emailMessage.To.Add(emailTo);
+                    //to multiple reciepient
+                    // var addresses = "firstemail@example.com;secondemail@example.com";
+                    //foreach (var address in addresses.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries))
+                    //{
+                    //    emailMessage.To.Add(address);
+                    //}
+                    // we can add the CCs and BCCs here.
+                    //emailMessage.Cc.Add(new MailboxAddress("Cc Receiver", "cc@example.com"));
+                    //emailMessage.Bcc.Add(new MailboxAddress("Bcc Receiver", "bcc@example.com"));
+
+                    emailMessage.Subject = EmailSubject;
+
+                    BodyBuilder emailBodyBuilder = new BodyBuilder();
+                    emailBodyBuilder.TextBody = EmailBody;
+
+                    if (EmailAttachments != null)
                     {
-                        HtmlBody = $"{Message}",
-                        TextBody = "wellcome",
-                    };
-                    var message = new MimeMessage
+                        foreach (var attachmentFile in EmailAttachments)
+                        {
+                            if (attachmentFile.Length == 0)
+                            {
+                                continue;
+                            }
+
+                            using (MemoryStream memoryStream = new MemoryStream())
+                            {
+                                attachmentFile.CopyTo(memoryStream);
+                                var attachmentFileByteArray = memoryStream.ToArray();
+
+                                emailBodyBuilder.Attachments.Add(attachmentFile.FileName, attachmentFileByteArray, ContentType.Parse(attachmentFile.ContentType));
+                            }
+                        }
+                    }
+
+                    emailMessage.Body = emailBodyBuilder.ToMessageBody();
+                    //this is the SmtpClient from the Mailkit.Net.Smtp namespace, not the System.Net.Mail one
+                    using (SmtpClient mailClient = new SmtpClient())
                     {
-                        Body = bodybuilder.ToMessageBody()
-                    };
-                    message.From.Add(new MailboxAddress("Info", _emailSettings.FromEmail));
-                    message.To.Add(new MailboxAddress("testing", email));
-                    message.Subject = "new feedback submitted";
-                    await client.SendAsync(message);
-                    await client.DisconnectAsync(true);
+                        mailClient.Connect(_emailSettings.Host, _emailSettings.Port, true);
+                        mailClient.Authenticate(_emailSettings.FromEmail, _emailSettings.Password);
+                        mailClient.Send(emailMessage);
+                        mailClient.Disconnect(true);
+                    }
                 }
-                //end of sending email
-                return "Success";
+
+                return "success";
             }
             catch (Exception)
             {
-                return "Failed";
+                // Exception Details
+                return "unsuccessful";
             }
         }
 

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Commands.Emails;
-using UserManagement.Application.DTOs;
 
 namespace UserManagement.Server.Controllers;
 [EnableCors("CorsPolicy")]
@@ -22,7 +21,7 @@ public class EmailsController : ControllerBase
 
     [HttpPost("Create")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<CustomerResponse>> SendEmail([FromForm] SendEmailCommand command)
+    public async Task<ActionResult> SendEmail([FromForm] SendEmailCommand command)
     {
         var result = await _mediator.Send(command);
         return Ok(result);
