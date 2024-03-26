@@ -7,6 +7,7 @@ import Sidebar from "../sidebar/sidebar";
 
 import showToast from "../../components/toastify/Toastify";
 import { postDataForAttachment } from "../../services/AccessAPI";
+import { SendOutlined } from "@mui/icons-material";
 
 const Email = () => {
   const navigate = useNavigate();
@@ -16,24 +17,18 @@ const Email = () => {
     emailToName: "",
     emailSubject: "",
     emailBody: "",
-    emailAttachments: "",
 
     // Add more properties as needed
   });
 
-  const [image, setImage] = useState(null);
+  const [emailAttachments, setemailAttachments] = useState(null);
   const handleChange = (event) => {
     event.persist();
     setInputs({ ...inputs, [event.target.name]: event.target.value });
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      const selectedImage = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedImage);
-      setImage(e.target.files[0]);
-    }
+      setemailAttachments(e.target.files[0]);
   };
 
   const handleFormSubmit = (event) => {
@@ -43,7 +38,7 @@ const Email = () => {
     formData.append("emailSubject", inputs.emailSubject);
     formData.append("emailBody", inputs.emailBody);
     // @ts-ignore
-    formData.append("image", image);
+    formData.append("emailAttachments", emailAttachments);
     event.preventDefault();
 
     // for (var pair of formData.entries()) {
@@ -55,7 +50,6 @@ const Email = () => {
         if (responseJson) {
           console.log(responseJson);
           showToast("success", "Email sent Successfully!");
-
           navigate("/dashboard");
         }
       })
@@ -69,10 +63,10 @@ const Email = () => {
       <form action="" autoComplete="off" onSubmit={handleFormSubmit}>
         <div className="row">
           <div className="col-md-6">
-          <div className="form-group form-floating mb-3">
+            <div className="form-floating mb-3">
               <input
                 type="email"
-                id="floatingEmail"
+                id="floatingInput0"
                 name="emailToId"
                 value={inputs.emailToId}
                 className="form-control"
@@ -106,20 +100,32 @@ const Email = () => {
               />
               <label htmlFor="floatingInput">Subject</label>
             </div>
-            <div className="form-floating">
-  <textarea className="form-control" name="emailBody"  placeholder="Leave a text here" id="floatingTextarea2" style= {{height:'100px'}} 
-  onChange={handleChange} value={inputs.emailBody} ></textarea>
-  <label htmlFor="floatingTextarea2">Text</label>
-</div>
-            
-              <button type="submit" className="btn btn-primary">Send</button>
+            <div className="form-group form-floating mb-3">
+              <textarea
+                className="form-control"
+                name="emailBody"
+                placeholder="Leave a text here"
+                id="floatingTextarea2"
+                style={{ height: "100px" }}
+                onChange={handleChange}
+                value={inputs.emailBody}
+              ></textarea>
+              <label htmlFor="floatingTextarea2">Text</label>
             </div>
- 
-       
+            <div className="form-group mb-3">
+              <input
+                type="file"
+                className="form-control"
+                onChange={handleImageChange}
+              />
+            </div>
+              <button type="submit" className="btn btn-primary"> Send <SendOutlined/>
+              </button>
+            
+          </div>
         </div>
       </form>
     </div>
-    
   );
 };
 export default Email;

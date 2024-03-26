@@ -20,7 +20,7 @@ public class EmailsController : ControllerBase
     }
 
     [HttpPost("Create")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType(typeof(int))]
     public async Task<ActionResult> SendEmail([FromForm] SendEmailCommand command)
     {
         var result = await _mediator.Send(command);
