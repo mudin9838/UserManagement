@@ -4,6 +4,6 @@ namespace UserManagement.Application.Common.Interfaces
 {
     public interface IEmailService
     {
-        Task<string> SendEmailAsync(string EmailToId, string EmailToName, string EmailSubject, string EmailBody, IFormFileCollection EmailAttachments);
+        Task<bool> SendEmailAsync(string EmailToId, string EmailToName, string EmailSubject, string EmailBody, IFormFileCollection EmailAttachments);
     }
 }

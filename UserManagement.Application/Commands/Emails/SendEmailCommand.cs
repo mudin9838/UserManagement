@@ -4,7 +4,7 @@ using UserManagement.Application.Common.Interfaces;
 
 namespace UserManagement.Application.Commands.Emails;
 
-public class SendEmailCommand : IRequest<string>
+public class SendEmailCommand : IRequest<int>
 {
     public string EmailToId { get; set; }
     public string EmailToName { get; set; }
@@ -14,7 +14,7 @@ public class SendEmailCommand : IRequest<string>
 }
 
 
-public class SendEmailCommandHandler : IRequestHandler<SendEmailCommand, string>
+public class SendEmailCommandHandler : IRequestHandler<SendEmailCommand, int>
 {
     private readonly IEmailService _emailService;
 
@@ -22,10 +22,10 @@ public class SendEmailCommandHandler : IRequestHandler<SendEmailCommand, string>
     {
         _emailService = emailService;
     }
-    public async Task<string> Handle(SendEmailCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(SendEmailCommand request, CancellationToken cancellationToken)
     {
         var response = await _emailService.SendEmailAsync(request.EmailToId, request.EmailToName, request.EmailSubject, request.EmailBody, request.EmailAttachments);
-        return response == null ? "Failed due to" : response;
+        return response ? 1 : 0;
     }
 }
 

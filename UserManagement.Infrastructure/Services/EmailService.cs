@@ -25,7 +25,7 @@ namespace UserManagement.Infrastructure.Services
 
         #region Handle functions
 
-        public async Task<string> SendEmailAsync(string EmailToId, string EmailToName, string EmailSubject, string EmailBody, IFormFileCollection EmailAttachments)
+        public async Task<bool> SendEmailAsync(string EmailToId, string EmailToName, string EmailSubject, string EmailBody, IFormFileCollection EmailAttachments)
         {
 
             try
@@ -81,12 +81,12 @@ namespace UserManagement.Infrastructure.Services
                     }
                 }
 
-                return "success";
+                return true;
             }
             catch (Exception)
             {
                 // Exception Details
-                return "unsuccessful";
+                return false;
             }
         }
 
