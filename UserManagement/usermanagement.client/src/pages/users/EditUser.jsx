@@ -11,7 +11,7 @@ import showToast from "../../components/toastify/Toastify";
 const EditUser = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
+  let userrole = localStorage.getItem("roles") || "";
   const [userDetails, setUserDetails] = useState({
     id: "",
     roleName: "",
@@ -21,7 +21,6 @@ const EditUser = () => {
     roles: "",
     // Add more properties as needed
   });
-  const [role, setRoles] = useState([]);
   const [image, setImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null)
   const handleChange = (event) => {
@@ -53,31 +52,22 @@ const EditUser = () => {
           fullName: result.fullName,
           userName: result.userName,
           email: result.email,
-          roles: result.roles,
+          roles: userrole,
           // Add more properties as needed
         });
       } else if (!responseJson) {
         showToast('error','No User Id found!');
-        navigate("/dashboard/users");
+        navigate("/dashboard");
       }
-      loadRoles();
     });
   }, [id, navigate]);
-  const loadRoles = async () => {
-    //debugger;
-    getData("/api/Role/GetAll").then((result) => {
-      if (result) {
-        setRoles(result);
-        console.log(result);
-      }
-    });
-  };
+
   const handleFormSubmit = (event) => {
     const formData = new FormData();
     formData.append("id", userDetails.id);
     formData.append("fullName", userDetails.fullName);
     formData.append("email", userDetails.email);
-    formData.append("roles", userDetails.roles);
+    formData.append("roles", userrole);
     // @ts-ignore
     formData.append("image", image);
     event.preventDefault();
@@ -90,10 +80,10 @@ const EditUser = () => {
       console.log(res);
       if (responseJson) {
         console.log(responseJson);
-       showToast('success','User updated successfully!');
-        navigate("/dashboard/users");
+       showToast('success','Data updated successfully!');
+        navigate("/dashboard");
       } else {
-        showToast('error','Error updating user!');
+        showToast('error','Error updating data!');
       }
     });
   };
@@ -119,7 +109,7 @@ const EditUser = () => {
               <input
                 type="email"
                 id="floatingEmail"
-                name="fullName"
+                name="email"
                 value={userDetails.email}
                 className="form-control"
                 onChange={handleChange}
@@ -130,23 +120,16 @@ const EditUser = () => {
             </div>
 
             <div className="form-group form-floating mb-3">
-              <select
-                className="form-select"
-                id="floatingSelect"
-                value={userDetails.roles}
-                onChange={handleChange}
-                aria-label="Floating label select example"
-              >
-                <option selected disabled>
-                  Select a role
-                </option>
-                {role.map((item) => (
-                  <option key={item.id} value={item.roleName}>
-                    {item.roleName}
-                  </option>
-                ))}
-              </select>
-              <label htmlFor="floatingSelect">User Role</label>
+              <input
+                type="text"
+                id="floatingUserRole"
+                name="roles"
+                value={userrole}
+                className="form-control"
+                placeholder="email@example.com"
+                required
+              />
+              <label htmlFor="floatingEmail">User Role</label>
             </div>
             <div>
               <button type="submit" className="btn btn-primary">

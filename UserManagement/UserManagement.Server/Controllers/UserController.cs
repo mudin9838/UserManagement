@@ -1,21 +1,22 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Commands.User.Create;
 using UserManagement.Application.Commands.User.Delete;
 using UserManagement.Application.Commands.User.Update;
 using UserManagement.Application.DTOs;
 using UserManagement.Application.Queries.User;
+using UserManagement.Server.Extensions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace UserManagement.Server.Controllers;
 
-[Route("api/[controller]")]
-[ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize]
 
-//[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-//[Authorize(Roles = "Admin, Management")]
-public class UserController : ControllerBase
+public class UserController : BaseApiController
 {
     private readonly IMediator _mediator;
 
@@ -23,6 +24,7 @@ public class UserController : ControllerBase
     {
         _mediator = mediator;
     }
+    [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
     [HttpPost("Create")]
     [ProducesDefaultResponseType(typeof(int))]
@@ -30,6 +32,7 @@ public class UserController : ControllerBase
     {
         return Ok(await _mediator.Send(command));
     }
+    [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
     [HttpGet("GetAll")]
     [ProducesDefaultResponseType(typeof(List<UserResponseDTO>))]
@@ -37,6 +40,7 @@ public class UserController : ControllerBase
     {
         return Ok(await _mediator.Send(new GetUserQuery()));
     }
+    [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
     [HttpDelete("Delete/{userId}")]
     [ProducesDefaultResponseType(typeof(int))]
@@ -45,6 +49,7 @@ public class UserController : ControllerBase
         var result = await _mediator.Send(new DeleteUserCommand() { Id = userId });
         return Ok(result);
     }
+    [Authorize(Policy = AuthorizationConsts.UserPolicy)]
 
     [HttpGet("GetUserDetails/{userId}")]
     [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
@@ -53,6 +58,7 @@ public class UserController : ControllerBase
         var result = await _mediator.Send(new GetUserDetailsQuery() { UserId = userId });
         return Ok(result);
     }
+    [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
     [HttpGet("GetUserDetailsByUserName/{userName}")]
     [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
@@ -61,6 +67,7 @@ public class UserController : ControllerBase
         var result = await _mediator.Send(new GetUserDetailsByUserNameQuery() { UserName = userName });
         return Ok(result);
     }
+    [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
     [HttpPost("AssignRoles")]
     [ProducesDefaultResponseType(typeof(int))]
@@ -70,6 +77,7 @@ public class UserController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
+    [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
     [HttpPut("EditUserRoles")]
     [ProducesDefaultResponseType(typeof(int))]
@@ -80,6 +88,9 @@ public class UserController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
+
+
     [HttpGet("GetAllUserDetails")]
     [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
     public async Task<IActionResult> GetAllUserDetails()
@@ -88,6 +99,7 @@ public class UserController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Policy = AuthorizationConsts.UserPolicy)]
 
     [HttpPut("EditUserProfile/{id}")]
     [ProducesDefaultResponseType(typeof(int))]
@@ -103,6 +115,7 @@ public class UserController : ControllerBase
             return BadRequest();
         }
     }
+    [Authorize(Policy = AuthorizationConsts.UserPolicy)]
 
 
     [HttpPut("ChangePassword/{userName}")]

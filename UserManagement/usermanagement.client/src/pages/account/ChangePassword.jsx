@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { putDataJson } from "../../services/AccessAPI";
+import showToast from "../../components/toastify/Toastify";
 
 
 
@@ -37,21 +38,11 @@ const inputs = () => {
       console.log(res);
       if (responseJson) {
         console.log(responseJson);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Password Updated Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/dashboard");
+        showToast("success", "Password updated Successfully!");
+        localStorage.clear()
+        navigate('/Login')
       } else {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Oops...",
-          text: "Error updating password",
-        });
+        showToast("error", "Failed updating Password!");
       }
     });
   };

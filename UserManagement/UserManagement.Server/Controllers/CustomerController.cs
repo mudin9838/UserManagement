@@ -9,15 +9,14 @@ using UserManagement.Application.Commands.Customers.Update;
 using UserManagement.Application.DTOs;
 using UserManagement.Application.Queries.Customers;
 using UserManagement.Core.Entities;
+using UserManagement.Server.Extensions;
 
 namespace UserManagement.Server.Controllers;
 
 [EnableCors("CorsPolicy")]
-[Route("api/[controller]")]
-[ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-[Authorize(Roles = "Admin, Management")]
-public class CustomerController : ControllerBase
+[Authorize]
+public class CustomerController : BaseApiController
 {
     private readonly IMediator _mediator;
     public CustomerController(IMediator mediator)
@@ -77,7 +76,7 @@ public class CustomerController : ControllerBase
         }
     }
 
-
+    [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
     [HttpDelete("Delete/{id}")]
     public async Task<ActionResult> DeleteCustomer(int id)
     {

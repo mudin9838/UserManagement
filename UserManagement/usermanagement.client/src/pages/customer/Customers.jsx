@@ -16,6 +16,7 @@ import Swal from 'sweetalert2'
 
 const Customers = () => {
    // const navigate = useNavigate();
+   let role = localStorage.getItem("roles") || "";
     const [customers, setCustomers] = useState([])
     const [selectedCustomer, setSelectedCustomer] = useState(null)
     const [error, setError] = useState(null)
@@ -75,14 +76,14 @@ const Customers = () => {
                 console.log(responseJson);
                 showToast("success", "User deleted successfully!");
   
-                loadUsers(); // Reload the user list after deletion
+                loadCustomers(); // Reload the user list after deletion
               } else {
                 showToast("error", "Error deleting customer!");
   
               }
             })
             .catch((error) => {
-              showToast("error", "Error deleting customer!");
+             // showToast("error", "Error deleting customer!");
   
             });
         }
@@ -191,9 +192,9 @@ const Customers = () => {
                       >
                         <EditOutlined className='text-warning' />
                       </Link>
-                      
+                      {role === "Admin"  && (
                         <DeleteOutlined onClick={(e) => deleteCustomer(e, c.id)} className='text-danger' />
-                     
+                      )}
                     </td>
                   </tr>
                 ))

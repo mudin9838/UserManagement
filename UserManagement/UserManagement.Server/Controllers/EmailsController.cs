@@ -4,14 +4,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Commands.Emails;
+using UserManagement.Server.Extensions;
 
 namespace UserManagement.Server.Controllers;
 [EnableCors("CorsPolicy")]
-[Route("api/[controller]")]
-[ApiController]
 [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-[Authorize(Roles = "Admin, Management")]
-public class EmailsController : ControllerBase
+[Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
+
+
+public class EmailsController : BaseApiController
 {
     private readonly IMediator _mediator;
     public EmailsController(IMediator mediator)

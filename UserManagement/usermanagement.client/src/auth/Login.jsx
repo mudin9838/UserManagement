@@ -14,6 +14,7 @@ import { Grid, Snackbar, TextField } from "@mui/material";
 import bg from "./bg/signin.svg";
 import bgimg from "./bg/backimg.jpg";
 import { useForm } from "react-hook-form";
+import showToast from "../components/toastify/Toastify";
 
 const darkTheme = createTheme({
   palette: {
@@ -84,31 +85,13 @@ export default function SignIn() {
           localStorage.setItem("userName", res.data.name);
           localStorage.setItem("roles", res.data.roles);
           localStorage.setItem("image", res.data.image);
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Login Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-
+          showToast("success", "Login in successful!");
           navigate("/dashboard");
         } else {
-          Swal.fire({
-            title: "Warning !",
-            icon: "warning",
-            text: "Invalid Credential. Verify your userName or password",
-            button: "Ok!",
-          });
+          showToast("error", "Invalid Credential. Verify your userName or password!");
         }
       })
       .catch((e) => {
-        Swal.fire({
-          title: "Warning !",
-          icon: "warning",
-          text: e,
-          button: "Ok!",
-        });
       });
   };
 
