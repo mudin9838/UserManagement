@@ -109,7 +109,8 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
     userName = null
   }
 
-  let role = localStorage.getItem('roles') || ''
+  let role = localStorage.getItem('roles') || '' 
+  let userId = localStorage.getItem('userId') 
 
   let userRole = ''
 
@@ -130,6 +131,9 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
   }
   const changePassword = () => {
     navigate('/dashboard/change-password')
+  }
+  const updateProfile = () => {
+    navigate(`/dashboard/edit-user/${userId}`)
   }
   useEffect(() => {
     var isAuth = localStorage.getItem('auth')
@@ -157,7 +161,7 @@ const TopBar = ({ open, handleDrawerOpen, setMode }) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={updateProfile}>Profile</MenuItem>
       <MenuItem onClick={changePassword}>Change Password</MenuItem>
       <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>

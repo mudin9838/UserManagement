@@ -81,6 +81,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const Array1 = [
     { text: "Dashboard", icon: <HomeOutlined />, path: "/dashboard" },
+    { text: "Customers", icon: <Business />, path: "/customers" },
 ];
 
 const Array2 = [
@@ -91,7 +92,6 @@ const Array2 = [
         icon: <HelpOutlineOutlined />,
         path: "/dashboard/usersrole",
     },
-    { text: "Customers", icon: <Business />, path: "/customers" },
     { text: "Email", icon: <EmailOutlined />, path: "/dashboard/emails" },
 ];
 
@@ -112,7 +112,6 @@ const SideBar = ({ open, handleDrawerClose }) => {
                 </IconButton>
             </DrawerHeader>
             <Divider />
-
             <List>
                 {Array1.map((item) => (
                     <ListItem key={item.path} disablePadding sx={{ display: "block" }}>
@@ -149,9 +148,9 @@ const SideBar = ({ open, handleDrawerClose }) => {
                     </ListItem>
                 ))}
             </List>
-
+            
             <Divider />
-            {role === "Admin" && (
+            {role === "Admin"  && (
                 <List>
                     {Array2.map((item) => (
                         <ListItem key={item.path} disablePadding sx={{ display: "block" }}>

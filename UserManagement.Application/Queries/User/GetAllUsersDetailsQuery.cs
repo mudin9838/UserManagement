@@ -20,7 +20,7 @@ namespace UserManagement.Application.Queries.User
 
         public async Task<List<UserDetailsResponseDTO>> Handle(GetAllUsersDetailsQuery request, CancellationToken cancellationToken)
         {
-            
+
 
             var users = await _identityService.GetAllUsersAsync();
             var userDetails = users.Select(x => new UserDetailsResponseDTO()
@@ -28,7 +28,6 @@ namespace UserManagement.Application.Queries.User
                 Id = x.id,
                 Email = x.email,
                 UserName = x.userName
-                //Roles = (IList<string>)_identityService.GetUserRolesAsync(x.id) // Converstion problem
             }).ToList();
 
             foreach (var user in userDetails)
