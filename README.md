@@ -14,6 +14,8 @@
 - User can see and modify only customers(Add, edit, Update but not delete operation)
 - You can modify and use your preferred db
 - dark/light theme
+- Change password
+- Update profile
 
 #### Important notice
 
