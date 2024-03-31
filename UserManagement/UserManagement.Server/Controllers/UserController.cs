@@ -8,6 +8,7 @@ using UserManagement.Application.Commands.User.Update;
 using UserManagement.Application.DTOs;
 using UserManagement.Application.Queries.User;
 using UserManagement.Server.Extensions;
+using UserManagement.Server.Routes;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,7 +27,7 @@ public class UserController : BaseApiController
     }
     [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
-    [HttpPost("Create")]
+    [HttpPost(CommonRoutes.Create)]
     [ProducesDefaultResponseType(typeof(int))]
     public async Task<ActionResult> CreateUser(CreateUserCommand command)
     {
@@ -34,7 +35,7 @@ public class UserController : BaseApiController
     }
     [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
-    [HttpGet("GetAll")]
+    [HttpGet(CommonRoutes.GetAll)]
     [ProducesDefaultResponseType(typeof(List<UserResponseDTO>))]
     public async Task<IActionResult> GetAllUserAsync()
     {
@@ -42,7 +43,7 @@ public class UserController : BaseApiController
     }
     [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
-    [HttpDelete("Delete/{userId}")]
+    [HttpDelete(UserRoutes.DeleteByUserId)]
     [ProducesDefaultResponseType(typeof(int))]
     public async Task<IActionResult> DeleteUser(string userId)
     {
@@ -51,7 +52,7 @@ public class UserController : BaseApiController
     }
     [Authorize(Policy = AuthorizationConsts.UserPolicy)]
 
-    [HttpGet("GetUserDetails/{userId}")]
+    [HttpGet(UserRoutes.GetUserDetailsByUserId)]
     [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
     public async Task<IActionResult> GetUserDetails(string userId)
     {
@@ -60,7 +61,7 @@ public class UserController : BaseApiController
     }
     [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
-    [HttpGet("GetUserDetailsByUserName/{userName}")]
+    [HttpGet(UserRoutes.GetUserDetailsByUserName)]
     [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
     public async Task<IActionResult> GetUserDetailsByUserName(string userName)
     {
@@ -69,7 +70,7 @@ public class UserController : BaseApiController
     }
     [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
-    [HttpPost("AssignRoles")]
+    [HttpPost(UserRoutes.AssignRoles)]
     [ProducesDefaultResponseType(typeof(int))]
 
     public async Task<ActionResult> AssignRoles(AssignUsersRoleCommand command)
@@ -79,7 +80,7 @@ public class UserController : BaseApiController
     }
     [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
-    [HttpPut("EditUserRoles")]
+    [HttpPut(UserRoutes.UpdateUserRoles)]
     [ProducesDefaultResponseType(typeof(int))]
 
     public async Task<ActionResult> EditUserRoles(UpdateUserRolesCommand command)
@@ -91,7 +92,7 @@ public class UserController : BaseApiController
     [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
 
 
-    [HttpGet("GetAllUserDetails")]
+    [HttpGet(UserRoutes.GetAllUserDetails)]
     [ProducesDefaultResponseType(typeof(UserDetailsResponseDTO))]
     public async Task<IActionResult> GetAllUserDetails()
     {
@@ -101,7 +102,7 @@ public class UserController : BaseApiController
 
     [Authorize(Policy = AuthorizationConsts.UserPolicy)]
 
-    [HttpPut("EditUserProfile/{id}")]
+    [HttpPut(UserRoutes.UpdateUserProfileById)]
     [ProducesDefaultResponseType(typeof(int))]
     public async Task<ActionResult> EditUserProfile(string id, [FromForm] EditUserProfileCommand command)
     {
@@ -118,7 +119,7 @@ public class UserController : BaseApiController
     [Authorize(Policy = AuthorizationConsts.UserPolicy)]
 
 
-    [HttpPut("ChangePassword/{userName}")]
+    [HttpPut(UserRoutes.UpdatePasswordByUserName)]
     [ProducesDefaultResponseType(typeof(int))]
     public async Task<ActionResult> ChangePsssword(string userName, [FromBody] ChangeUserPasswordCommand command)
     {

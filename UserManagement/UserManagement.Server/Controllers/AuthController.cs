@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Commands.Auth;
 using UserManagement.Application.DTOs;
+using UserManagement.Server.Routes;
 
 
 namespace UserManagement.Server.Controllers;
@@ -17,7 +18,7 @@ public class AuthController : BaseApiController
     }
 
 
-    [HttpPost("Login")]
+    [HttpPost(AuthRoutes.Login)]
     [ProducesDefaultResponseType(typeof(AuthResponseDTO))]
     public async Task<IActionResult> Login([FromBody] AuthCommand command)
     {

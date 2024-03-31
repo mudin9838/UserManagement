@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using UserManagement.Application.Commands.Emails;
 using UserManagement.Server.Extensions;
+using UserManagement.Server.Routes;
 
 namespace UserManagement.Server.Controllers;
 [EnableCors("CorsPolicy")]
@@ -20,7 +21,7 @@ public class EmailsController : BaseApiController
         _mediator = mediator;
     }
 
-    [HttpPost("Create")]
+    [HttpPost(CommonRoutes.Create)]
     [ProducesDefaultResponseType(typeof(int))]
     public async Task<ActionResult> SendEmail([FromForm] SendEmailCommand command)
     {
