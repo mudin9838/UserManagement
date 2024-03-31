@@ -3,7 +3,7 @@
 ## Demo url https://usermsapi.azurewebsites.net Login:- username:admin password:Test@123
 
 ![alt](../UserManagement/UserManagement/usermanagement.client/src/assets/readmenew.png)
-### On this project we've used react latest version(18+) for client, .Net core web ap(version 8) for backend, MSSQL as db
+### On this project we've used react latest version(18+) for client, .Net core web ap(version 8) for backend, MSSQL as db, Onion Architecture with CQRS
 
 #### Key features
 
