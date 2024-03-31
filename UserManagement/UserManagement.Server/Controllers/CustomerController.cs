@@ -10,6 +10,7 @@ using UserManagement.Application.DTOs;
 using UserManagement.Application.Queries.Customers;
 using UserManagement.Core.Entities;
 using UserManagement.Server.Extensions;
+using UserManagement.Server.Routes;
 
 namespace UserManagement.Server.Controllers;
 
@@ -25,28 +26,28 @@ public class CustomerController : BaseApiController
     }
 
 
-    [HttpGet("GetAll")]
+    [HttpGet(CommonRoutes.GetAll)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<List<Customer>> Get()
     {
         return await _mediator.Send(new GetAllCustomerQuery());
     }
 
-    [HttpGet("{id}")]
+    [HttpGet(CommonRoutes.GetById)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<Customer> Get(Int64 id)
     {
         return await _mediator.Send(new GetCustomerByIdQuery(id));
     }
 
-    [HttpGet("email")]
+    [HttpGet(CommonRoutes.GetByEmail)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<Customer> GetByEmail(string email)
     {
         return await _mediator.Send(new GetCustomerByEmailQuery(email));
     }
 
-    [HttpPost("Create")]
+    [HttpPost(CommonRoutes.Create)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<CustomerResponse>> CreateCustomer([FromBody] CreateCustomerCommand command)
     {
@@ -55,7 +56,7 @@ public class CustomerController : BaseApiController
     }
 
 
-    [HttpPut("Edit/{id}")]
+    [HttpPut(CommonRoutes.UpdateById)]
     public async Task<ActionResult> Edit(int id, [FromBody] EditCustomerCommand command)
     {
         try
@@ -77,7 +78,7 @@ public class CustomerController : BaseApiController
     }
 
     [Authorize(Policy = AuthorizationConsts.ManagementPolicy)]
-    [HttpDelete("Delete/{id}")]
+    [HttpDelete(CommonRoutes.DeleteById)]
     public async Task<ActionResult> DeleteCustomer(int id)
     {
         try
