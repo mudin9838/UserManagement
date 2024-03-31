@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { BASE_URL } from "../../App";
-import Sidebar from "../sidebar/sidebar";
-
 import showToast from "../../components/toastify/Toastify";
 import { postDataForAttachment } from "../../services/AccessAPI";
 import { SendOutlined } from "@mui/icons-material";
@@ -28,7 +23,7 @@ const Email = () => {
   };
 
   const handleImageChange = (e) => {
-      setemailAttachments(e.target.files[0]);
+    setemailAttachments(e.target.files[0]);
   };
 
   const handleFormSubmit = (event) => {
@@ -119,9 +114,10 @@ const Email = () => {
                 onChange={handleImageChange}
               />
             </div>
-              <button type="submit" className="btn btn-primary"> Send <SendOutlined/>
-              </button>
-            
+            <button type="submit" className="btn btn-primary">
+              {" "}
+              Send <SendOutlined />
+            </button>
           </div>
         </div>
       </form>

@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, json, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Swal from "sweetalert2";
-
-import { BASE_URL } from "../../App";
 import { getData, postData } from "../../services/AccessAPI";
 import showToast from "../../components/toastify/Toastify";
 
@@ -65,13 +61,11 @@ const AddUser = () => {
           console.log(responseJson);
           showToast("success", "User Added Successfully!");
 
-
           navigate("/dashboard/users");
         }
       })
       .catch((e) => {
         showToast("error", "Error adding user!");
-
       });
   };
 

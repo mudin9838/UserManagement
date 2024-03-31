@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { json, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Login_BASE_URL } from "../App";
+import { BASE_URL} from "../App";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -77,7 +77,7 @@ export default function SignIn() {
     };
 
     axios
-      .post(Login_BASE_URL + "/api/Auth/Login", data)
+      .post(BASE_URL + "/api/Auth/Login", data)
       .then((res) => {
         if (res) {
           localStorage.setItem("auth", res.data.token);

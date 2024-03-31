@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { BASE_URL } from "../../App";
-import Sidebar from "../sidebar/sidebar";
-
+import { useParams, useNavigate } from "react-router-dom";
 import { getData, putData } from "../../services/AccessAPI";
 import showToast from "../../components/toastify/Toastify";
 
@@ -22,23 +17,23 @@ const EditUser = () => {
     // Add more properties as needed
   });
   const [image, setImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null)
+  const [previewImage, setPreviewImage] = useState(null);
   const handleChange = (event) => {
     event.persist();
     setUserDetails({ ...userDetails, [event.target.name]: event.target.value });
   };
 
-  const handleImageChange = e => {
+  const handleImageChange = (e) => {
     if (e.target.files[0]) {
-      const selectedImage = e.target.files[0]
-      const reader = new FileReader()
+      const selectedImage = e.target.files[0];
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setPreviewImage(reader.result)
-      }
-      reader.readAsDataURL(selectedImage)
-      setImage(e.target.files[0])
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(selectedImage);
+      setImage(e.target.files[0]);
     }
-  }
+  };
 
   useEffect(() => {
     getData(`/api/User/GetUserDetails/${id}`).then((result) => {
@@ -56,7 +51,7 @@ const EditUser = () => {
           // Add more properties as needed
         });
       } else if (!responseJson) {
-        showToast('error','No User Id found!');
+        showToast("error", "No User Id found!");
         navigate("/dashboard");
       }
     });
@@ -71,7 +66,7 @@ const EditUser = () => {
     // @ts-ignore
     formData.append("image", image);
     event.preventDefault();
- 
+
     // for (var pair of formData.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
     // }
@@ -80,10 +75,10 @@ const EditUser = () => {
       console.log(res);
       if (responseJson) {
         console.log(responseJson);
-       showToast('success','Data updated successfully!');
+        showToast("success", "Data updated successfully!");
         navigate("/dashboard");
       } else {
-        showToast('error','Error updating data!');
+        showToast("error", "Error updating data!");
       }
     });
   };
@@ -165,5 +160,3 @@ const EditUser = () => {
   );
 };
 export default EditUser;
-
-

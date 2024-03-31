@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
-
-import Sidebar from "../sidebar/sidebar";
-import { BASE_URL } from "../../App";
 import { deleteData, getData } from "../../services/AccessAPI";
 import showToast from "../../components/toastify/Toastify";
 
@@ -43,7 +39,6 @@ const UserList = () => {
   //   }
   // };
 
-
   // const csvHeaders = [
   //   { label: 'Id', key: 'Id' },
   //   { label: 'User Name', key: 'RoleName' },
@@ -72,12 +67,10 @@ const UserList = () => {
               loadUsers(); // Reload the user list after deletion
             } else {
               showToast("error", "Error deleting user!");
-
             }
           })
           .catch((error) => {
             showToast("error", "Error deleting role!");
-
           });
       }
     });

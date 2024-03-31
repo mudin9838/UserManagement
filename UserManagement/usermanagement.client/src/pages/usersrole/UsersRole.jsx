@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
-import { BASE_URL } from "../../App";
-import Sidebar from "../sidebar/sidebar";
-
 import { getData, putData } from "../../services/AccessAPI";
 
 const UsersRole = () => {
