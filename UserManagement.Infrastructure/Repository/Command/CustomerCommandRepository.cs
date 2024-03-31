@@ -14,20 +14,20 @@ namespace UserManagement.Infrastructure.Repository.Command
             this.context = context;
         }
 
-        public async Task<Customer> AddAsync(Customer entity)
+        public async Task<Customer> AddAsync(Customer entity, CancellationToken cancellationToken)
         {
             context.Customers.Add(entity);
             await context.SaveChangesAsync();
             return entity;
         }
 
-        public async Task DeleteAsync(Customer entity)
+        public async Task DeleteAsync(Customer entity, CancellationToken cancellationToken)
         {
             context.Customers.Remove(entity);
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Customer entity)
+        public async Task UpdateAsync(Customer entity, CancellationToken cancellationToken)
         {
             context.Customers.Update(entity);
             await context.SaveChangesAsync();
