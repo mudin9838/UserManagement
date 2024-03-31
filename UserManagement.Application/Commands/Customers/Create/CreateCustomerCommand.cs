@@ -38,7 +38,7 @@ namespace UserManagement.Application.Commands.Customers.Create
                 throw new ApplicationException("There is a problem in mapper");
             }
 
-            var newCustomer = await _customerCommandRepository.AddAsync(customerEntity);
+            var newCustomer = await _customerCommandRepository.AddAsync(customerEntity, cancellationToken);
             var customerResponse = CustomerMapper.Mapper.Map<CustomerResponse>(newCustomer);
             return customerResponse;
         }

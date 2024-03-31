@@ -32,7 +32,7 @@ namespace UserManagement.Application.Commands.Customers.Delete
             {
                 var customerEntity = await _customerQueryRepository.GetByIdAsync(request.Id);
 
-                await _customerCommandRepository.DeleteAsync(customerEntity);
+                await _customerCommandRepository.DeleteAsync(customerEntity, cancellationToken);
             }
             catch (Exception exp)
             {
