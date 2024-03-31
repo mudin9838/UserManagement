@@ -12,10 +12,6 @@ namespace UserManagement.Infrastructure.Services
         #region Fields
         private readonly EmailSettings _emailSettings;
 
-        public EmailService(EmailSettings emailSettings)
-        {
-            _emailSettings = emailSettings;
-        }
         #endregion
 
         #region constructors

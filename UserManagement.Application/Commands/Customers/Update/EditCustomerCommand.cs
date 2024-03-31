@@ -39,7 +39,7 @@ namespace UserManagement.Application.Commands.Customers.Update
 
             try
             {
-                await _customerCommandRepository.UpdateAsync(customerEntity);
+                await _customerCommandRepository.UpdateAsync(customerEntity, cancellationToken);
             }
             catch (Exception exp)
             {
