@@ -1,8 +1,5 @@
 ﻿using UserManagement.Core.Entities;
 using UserManagement.Core.Repositories.Query.Base;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace UserManagement.Core.Repositories.Query
 {
@@ -10,8 +7,8 @@ namespace UserManagement.Core.Repositories.Query
     public interface ICustomerQueryRepository : IQueryRepository<Customer>
     {
         //Custom operation which is not generic
-        Task<IReadOnlyList<Customer>> GetAllAsync();
+        Task<IReadOnlyList<Customer>> GetAllAsync(CancellationToken cancellationToken);
         Task<Customer> GetByIdAsync(Int64 id);
-        Task<Customer> GetCustomerByEmail(string email);
+        Task<Customer> GetCustomerByEmail(string email, CancellationToken cancellationToken);
     }
 }

@@ -15,16 +15,16 @@ namespace UserManagement.Infrastructure.Repository.Query
             _orderingContext = orderingContext;
         }
 
-        public async Task<IReadOnlyList<Customer>> GetAllAsync()
+        public async Task<IReadOnlyList<Customer>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _orderingContext.Customers.ToListAsync();
+            return await _orderingContext.Customers.ToListAsync(cancellationToken);
         }
         public async Task<Customer> GetByIdAsync(long id)
         {
             return await _orderingContext.Customers.FindAsync(id);
         }
 
-        public Task<Customer> GetCustomerByEmail(string email)
+        public Task<Customer> GetCustomerByEmail(string email, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

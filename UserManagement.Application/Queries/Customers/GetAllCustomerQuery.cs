@@ -20,7 +20,7 @@ namespace UserManagement.Application.Queries.Customers
         }
         public async Task<List<Customer>> Handle(GetAllCustomerQuery request, CancellationToken cancellationToken)
         {
-            return (List<Customer>)await _customerQueryRepository.GetAllAsync();
+            return (List<Customer>)await _customerQueryRepository.GetAllAsync(cancellationToken);
         }
     }
 }
