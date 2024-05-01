@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using UserManagement.Application.DTOs;
 using UserManagement.Application.Mapper;
 using UserManagement.Core.Entities;
@@ -25,12 +26,15 @@ namespace UserManagement.Application.Commands.Customers.Create
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CustomerResponse>
     {
         private readonly ICustomerCommandRepository _customerCommandRepository;
+        private IDistributedCache _distributedCache;
+
         public CreateCustomerCommandHandler(ICustomerCommandRepository customerCommandRepository)
         {
             _customerCommandRepository = customerCommandRepository;
         }
         public async Task<CustomerResponse> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
+            _distributedCache.Remove("CustomerData");
             var customerEntity = CustomerMapper.Mapper.Map<Customer>(request);
 
             if (customerEntity is null)

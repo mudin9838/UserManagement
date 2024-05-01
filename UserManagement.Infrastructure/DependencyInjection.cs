@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +22,11 @@ namespace UserManagement.Infrastructure
             services.AddDbContext<OrderingContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly(typeof(OrderingContext).Assembly.FullName)
                 ));
+              services.AddStackExchangeRedisCache(options =>
+             {
+               options.Configuration = configuration.GetConnectionString("AzureRedisConnection");
+               options.InstanceName = "userdata";
+               });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<OrderingContext>()
