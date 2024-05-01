@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using UserManagement.Application.DTOs;
 using UserManagement.Application.Mapper;
 using UserManagement.Core.Entities;
